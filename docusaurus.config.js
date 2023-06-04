@@ -84,6 +84,12 @@ const config = {
             position: 'left',
             activeBaseRegex: `/linux/`,
           },
+          {
+            to: '/docker/docker-intro',  // ./docs-system/Intro.md
+            label: 'Docker',
+            position: 'left',
+            activeBaseRegex: `/docker/`,
+          },
           {to: '/blog', label: '博客', position: 'left'},
           {
             href: 'https://github.com/facebook/docusaurus',
