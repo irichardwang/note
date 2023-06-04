@@ -44,7 +44,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/erzhongwang/note/blob/main/',
         },
         blog: {
           showReadingTime: true,
@@ -92,7 +92,7 @@ const config = {
           },
           {to: '/blog', label: '博客', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/erzhongwang/note',
             label: 'GitHub',
             position: 'right',
           },
@@ -136,7 +136,7 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/erzhongwang/note',
               },
             ],
           },
@@ -157,6 +157,8 @@ const config = {
           path: 'linux',
           routeBasePath: 'linux',
           sidebarPath: require.resolve('./sidebars.js'),
+          editUrl:
+            'https://github.com/erzhongwang/note/blob/main/',
         }, 
       ],
       [
@@ -166,6 +168,8 @@ const config = {
           path: 'docker',
           routeBasePath: 'docker',
           sidebarPath: require.resolve('./sidebars.js'),
+          editUrl:
+            'https://github.com/erzhongwang/note/blob/main/',
         }, 
       ],
   ],
