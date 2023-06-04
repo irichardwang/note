@@ -38,6 +38,8 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: 'docs',
+          path: 'docs',
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
@@ -71,10 +73,16 @@ const config = {
         },
         items: [
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            to: '/docs/intro',    // ./docs/Intro.md
+            label: '简介',
             position: 'left',
-            label: '文档',
+            activeBaseRegex: `/docs/`,
+          },
+          {
+            to: '/linux/linux-intro',  // ./docs-system/Intro.md
+            label: 'Linux',
+            position: 'left',
+            activeBaseRegex: `/linux/`,
           },
           {to: '/blog', label: '博客', position: 'left'},
           {
@@ -134,6 +142,28 @@ const config = {
         darkTheme: darkCodeTheme,
       },
     }),
+
+    plugins: [
+      [
+        '@docusaurus/plugin-content-docs',
+        {
+          id: 'linux',
+          path: 'linux',
+          routeBasePath: 'linux',
+          sidebarPath: require.resolve('./sidebars.js'),
+        }, 
+      ],
+      [
+        '@docusaurus/plugin-content-docs',
+        {
+          id: 'docker',
+          path: 'docker',
+          routeBasePath: 'docker',
+          sidebarPath: require.resolve('./sidebars.js'),
+        }, 
+      ],
+  ],
+
 };
 
 module.exports = config;
