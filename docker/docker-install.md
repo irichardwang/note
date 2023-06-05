@@ -4,7 +4,9 @@ sidebar_position: 2
 
 # Docker的安装部署
 
-[Install Docker Engine on CentOS | Docker Documentation](https://docs.docker.com/engine/install/centos/#install-using-the-repository)
+import LinkCard from '@site/src/components/LinkCard';
+
+<LinkCard title="Docker官方安装文档" description="Install Docker Engine on CentOS | Docker Documentation" to="https://docs.docker.com/engine/install/centos/#install-using-the-repository" />
 
 ## Docker的官方源安装
 
