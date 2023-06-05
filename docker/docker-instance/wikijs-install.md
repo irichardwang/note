@@ -1,14 +1,16 @@
 ---
 sidebar_position: 1
 sidebar_label: 'Wiki.js'
+title: Docker部署Wiki.js
 ---
 
-
-# Docker部署Wiki.js
+import LinkCard from '@site/src/components/LinkCard';
 
 :::caution
 Wikijs官方说明了在下一个大版本只兼容postgresql数据库，因此无论采用何种安装均不建议使用MySQL，将造成后续无法升级至3.0大版本。
 :::
+
+<LinkCard title="Wiki.js官方安装文档" description="Install Wiki.js | Wiki.js" to="https://docs.requarks.io/install/docker"></LinkCard>
 
 ## docker-compose文件
 
