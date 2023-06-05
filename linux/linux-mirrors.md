@@ -3,16 +3,15 @@ sidebar_label: 替换国内软件源
 sidebar_position: 2
 ---
 
-# 替换国内软件源
-
-推荐使用MirrorZ高校镜像站点集合
-[Rocky Linux 软件仓库镜像使用帮助 - MirrorZ Help (cernet.edu.cn)](https://help.mirrors.cernet.edu.cn/rocky/)
-
-
-## 替换软件源
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import LinkCard from '@site/src/components/LinkCard';
+
+# 替换国内软件源
+
+<LinkCard title="推荐使用MirrorZ高校镜像站点集合" description="Rocky Linux 软件仓库镜像使用帮助 MirrorZ Help" to="https://help.mirrors.cernet.edu.cn/rocky/" />
+
+## 替换软件源
 
 <Tabs>
 <TabItem value='RockyLinux8' label='RockyLinux8' default>
