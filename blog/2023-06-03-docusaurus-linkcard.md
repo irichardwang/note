@@ -1,5 +1,7 @@
 ---
 title: Docusaurus LinkCard 样式
+authors: richard
+tags: [docusaurus]
 ---
 
 import LinkCard from '@site/src/components/LinkCard';
