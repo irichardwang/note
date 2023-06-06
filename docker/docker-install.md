@@ -49,14 +49,18 @@ Docker compose 与 docker-compose 服务不同，前者为plugin，后者为stan
 绝大多数情况下不需要安装，但少数应用可能需要使用 docker-compose。
 :::
 
+#### 下载docker-compose
 ```bash
-# 下载 docker-compose
-curl -SL https://github.com/docker/compose/releases/download/v2.18.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+curl -SL https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+```
 
-# 授权
+#### 授权执行命令
+```bash
 chmod +x /usr/local/bin/docker-compose
+```
 
-# 确认是否安装成功
+#### 确认是否安装成功
+```bash
 docker-compose --version
 ```
 
@@ -66,7 +70,7 @@ docker-compose --version
 :::
 
 :::caution
-虽然Portainer具有很多简化易用的操作功能，但不少软件公司建议有限使用Portainer，可能因不知道背后省略了哪些参数而产生应用配置问题。
+虽然Portainer具有很多简化易用的操作功能，但建议有限使用Portainer，可能产生一些不可预期的问题。
 
 实际应用中建议主要用来做可视化监控，而具体操作仍应使用命令行。
 :::
