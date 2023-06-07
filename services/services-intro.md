@@ -13,8 +13,6 @@ import LinkCard from '@site/src/components/LinkCard';
 
 ## 项目管理
 
-Mattermost
-
 <LinkCard title="Mattermost" description="Mattermost是一款开源的团队协作工具，类似于Slack，具有团队沟通、项目管理等功能。" to="/services/mattermost-install"></LinkCard>
 
 
