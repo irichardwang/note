@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 7
 ---
 
 # Docker的安装部署
@@ -28,17 +28,17 @@ yum-config-manager \
 
 #### Docker的安装命令
 ```bash
-yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+yum install services-ce services-ce-cli containerd.io services-buildx-plugin services-compose-plugin
 ```
 
 #### 启动docker
 ```bash
-systemctl start docker
+systemctl start services
 ```
 
 #### 设置开机自启
 ```bash
-systemctl enable docker
+systemctl enable services
 ```
 
 ## 安装Docker-Compose
@@ -51,17 +51,17 @@ Docker compose 与 docker-compose 服务不同，前者为plugin，后者为stan
 
 #### 下载docker-compose
 ```bash
-curl -SL https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+curl -SL https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-linux-x86_64 -o /usr/local/bin/services-compose
 ```
 
 #### 授权执行命令
 ```bash
-chmod +x /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/services-compose
 ```
 
 #### 确认是否安装成功
 ```bash
-docker-compose --version
+services-compose --version
 ```
 
 ## 安装管理工具Portainer
@@ -76,8 +76,8 @@ docker-compose --version
 :::
 
 ```bash
-docker run -d -p 8080:8000 -p 9443:9443 --name=portainer --restart=always \
--v /var/run/docker.sock:/var/run/docker.sock \
+services run -d -p 8080:8000 -p 9443:9443 --name=portainer --restart=always \
+-v /var/run/services.sock:/var/run/services.sock \
 -v portainer_data:/data \
 portainer/portainer-ee:latest
 ```

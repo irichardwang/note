@@ -12,7 +12,7 @@ import LinkCard from '@site/src/components/LinkCard';
 #### 克隆官方Docker仓库
 ```bash
 git clone https://github.com/mattermost/docker
-cd docker
+cd services
 ```
 
 #### 复制`.env`配置文件
@@ -36,17 +36,17 @@ chown -R 2000:2000 ./volumes/app/mattermost
 ## 启动/关闭服务
 
 :::caution
-此处用到的命令为`docker-compose`，而非`docker compose`。若未安装过`docker-compose`，请参考[安装Docker-Compose](/docker/docker-install#安装docker-compose)。
+此处用到的命令为`docker-compose`，而非`docker compose`。若未安装过`docker-compose`，请参考[安装Docker-Compose](/linux/docker-install#安装docker-compose)。
 :::
 
 #### 启动服务
 ```bash
-docker-compose -f docker-compose.yml -f docker-compose.without-nginx.yml up -d
+services-compose -f services-compose.yml -f services-compose.without-nginx.yml up -d
 ```
 
 #### 关闭服务
 ```bash
-docker-compose -f docker-compose.yml -f docker-compose.without-nginx.yml down
+services-compose -f services-compose.yml -f services-compose.without-nginx.yml down
 ```
 
 :::info

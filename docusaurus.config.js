@@ -18,7 +18,7 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
+  organizationName: 'verystation', // Usually your GitHub org/user name.
   projectName: 'docusaurus', // Usually your repo name.
 
   onBrokenLinks: 'throw',
@@ -93,10 +93,10 @@ const config = {
             activeBaseRegex: `/linux/`,
           },
           {
-            to: '/docker/docker-intro',  // ./docs-system/Intro.md
-            label: 'Docker',
+            to: '/services/services-intro',  // ./docs-system/Intro.md
+            label: 'Services',
             position: 'left',
-            activeBaseRegex: `/docker/`,
+            activeBaseRegex: `/services/`,
           },
           {to: '/blog', label: '博客', position: 'left'},
           {
@@ -172,9 +172,9 @@ const config = {
       [
         '@docusaurus/plugin-content-docs',
         {
-          id: 'docker',
-          path: 'docker',
-          routeBasePath: 'docker',
+          id: 'services',
+          path: 'services',
+          routeBasePath: 'services',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
             'https://github.com/erzhongwang/note/blob/main/',

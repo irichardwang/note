@@ -31,11 +31,11 @@ SECRET_KEY_BASE=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 #### 启动/关闭服务
 
 :::caution
-此处用到的命令为`docker-compose`，而非`docker compose`。若未安装过`docker-compose`，请参考[安装Docker-Compose](/docker/docker-install#安装docker-compose)。
+此处用到的命令为`docker-compose`，而非`docker compose`。若未安装过`docker-compose`，请参考[安装Docker-Compose](/linux/docker-install#安装docker-compose)。
 :::
 
 ```bash
-docker-compose up -d
+services-compose up -d
 ```
 
 :::info
@@ -58,7 +58,7 @@ module.exports = {
 ## Plausible的更新
 
 ```bash
-docker-compose down --remove-orphans
-docker-compose pull plausible
-docker-compose up -d
+services-compose down --remove-orphans
+services-compose pull plausible
+services-compose up -d
 ```
