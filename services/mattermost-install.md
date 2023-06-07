@@ -1,6 +1,9 @@
 ---
 sidebar_label: 'Mattermost'
 title: Docker部署Mattermost
+tags: 
+  - mattermost
+  - docker
 ---
 
 import LinkCard from '@site/src/components/LinkCard';

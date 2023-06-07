@@ -1,7 +1,12 @@
 ---
 sidebar_label: 'Atlassian'
 title: Docker部署Atalssian全套软件
-
+tags:
+  - docker
+  - atlassian
+  - jira
+  - confluence
+  - crowd
 ---
 
 import LinkCard from '@site/src/components/LinkCard';

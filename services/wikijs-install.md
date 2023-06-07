@@ -1,6 +1,9 @@
 ---
 sidebar_label: 'Wiki.js'
 title: Docker部署Wiki.js
+tags:
+  - docker
+  - wikijs
 ---
 
 import LinkCard from '@site/src/components/LinkCard';

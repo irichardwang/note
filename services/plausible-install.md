@@ -1,7 +1,9 @@
 ---
 sidebar_label: 'Plausible'
 title: Docker部署Plausible
-
+tags:
+  - docker
+  - plausible
 ---
 
 import LinkCard from '@site/src/components/LinkCard';

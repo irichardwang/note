@@ -1,6 +1,9 @@
 ---
 sidebar_label: 'SiYuan'
 title: Docker部署思源笔记服务器
+tags:
+  - docker
+  - siyuan
 ---
 
 import LinkCard from '@site/src/components/LinkCard';
