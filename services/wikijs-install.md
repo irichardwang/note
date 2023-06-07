@@ -1,5 +1,4 @@
 ---
-sidebar_position: 1
 sidebar_label: 'Wiki.js'
 title: Docker部署Wiki.js
 ---
