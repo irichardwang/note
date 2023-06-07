@@ -70,3 +70,40 @@ docker run \
   --restart=always \
   atlassian/confluence
 ```
+
+## 破解
+
+#### 宿主机安装Java
+
+```bash
+dnf install java-17-openjdk
+```
+
+#### 上传破解工具到宿主机和容器
+
+:::tip
+宿主机和容器内的存放位置最好一致，方便后续配置Java变量。
+
+这里选择 `/opt/atlassian-agent.jar`
+:::
+
+#### 配置Java环境变量
+
+将下面的内容添加到宿主机和容器内的全局变量，如果是root用户，可以直接在 `/etc/profile` 里添加，如果是普通用户，可以在 `~/.bashrc` 里添加。
+
+```bash
+export JAVA_OPTS="-javaagent:/opt/atlassian-agent.jar ${JAVA_OPTS}"
+```
+
+#### 计算破解码
+
+:::info
+以下命令中：
+- `jira`，`conf`，`crowd` 是对应的应用名。
+- `-m` 为邮箱，`-n` 为用户名，`-o` 为网址，可任意填写。
+- `-s` 为许可编号，根据输入秘钥界面的提示填入。
+:::
+
+```bash
+java -jar /opt/atlassian-agent.jar -d -p jira -m admin@verystation.com -n admin -o https://verystation.com -s BTHV-5X2G-8XNJ-ZHZG
+```
