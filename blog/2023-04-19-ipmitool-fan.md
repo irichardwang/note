@@ -8,8 +8,10 @@ import LinkCard from '@site/src/components/LinkCard';
 
 :::danger
 服务器安装后，发现风扇速度很有规律的在高低转速之间变化。查看主板IPMI日志发现如下的错误
+
 > FANA Fan Lower Critical – Going Low – Assertion
 > FANA Fan Lower Non-Recoverable – Going Low – Assertion
+
 判断原因为风扇转速太低造成的风扇低速报警，在产生报警后，风扇会以满速运行一段时间，直到测速发现一切正常，再次降低转速，并最终导致这种规律的报警。
 :::
 
