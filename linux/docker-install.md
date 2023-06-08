@@ -26,7 +26,7 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 
 #### Docker的安装命令
 ```bash
-yum install services-ce services-ce-cli containerd.io services-buildx-plugin services-compose-plugin
+yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 #### 启动docker
@@ -49,17 +49,17 @@ Docker compose 与 docker-compose 服务不同，前者为plugin，后者为stan
 
 #### 下载docker-compose
 ```bash
-curl -SL https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-linux-x86_64 -o /usr/local/bin/services-compose
+curl -SL https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
 ```
 
 #### 授权执行命令
 ```bash
-chmod +x /usr/local/bin/services-compose
+chmod +x /usr/local/bin/docker-compose
 ```
 
 #### 确认是否安装成功
 ```bash
-services-compose --version
+docker-compose --version
 ```
 
 ## 安装管理工具Portainer
@@ -74,8 +74,8 @@ services-compose --version
 :::
 
 ```bash
-services run -d -p 8080:8000 -p 9443:9443 --name=portainer --restart=always \
--v /var/run/services.sock:/var/run/services.sock \
+docker run -d -p 8080:8000 -p 9443:9443 --name=portainer --restart=always \
+-v /var/run/docker.sock:/var/run/docker.sock \
 -v portainer_data:/data \
 portainer/portainer-ee:latest
 ```
