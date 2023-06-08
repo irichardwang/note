@@ -21,9 +21,7 @@ yum install -y yum-utils
 :::
 
 ```bash
-yum-config-manager \
-    --add-repo \
-    https://download.docker.com/linux/centos/docker-ce.repo
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 ```
 
 #### Docker的安装命令
