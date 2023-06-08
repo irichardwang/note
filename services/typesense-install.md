@@ -32,3 +32,16 @@ services:
 ```bash
 docker-compose up
 ```
+
+#### 创建`.env`文件
+
+```yaml
+TYPESENSE_API_KEY=xyz
+TYPESENSE_HOST=typesence.verystation.com
+TYPESENSE_PORT=8108
+TYPESENSE_PROTOCOL=https
+```
+
+```bash
+$ docker run -it --env-file=/opt/scraper/.env -e "CONFIG=$(cat /opt/scraper/config.json | jq -r tostring)" typesense/docsearch-scraper:0.6.0
+```
