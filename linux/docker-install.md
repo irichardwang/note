@@ -31,12 +31,12 @@ yum install services-ce services-ce-cli containerd.io services-buildx-plugin ser
 
 #### 启动docker
 ```bash
-systemctl start services
+systemctl start docker
 ```
 
 #### 设置开机自启
 ```bash
-systemctl enable services
+systemctl enable docker
 ```
 
 ## 安装Docker-Compose
