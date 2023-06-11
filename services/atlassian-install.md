@@ -64,7 +64,9 @@ docker run \
 
 ```bash
 docker volume create --name confluenceVolume
+```
 
+```bash
 docker run \
   -v confluenceVolume:/var/atlassian/application-data/confluence \
   --name="confluence" -d -p 8090:8090 \
@@ -108,7 +110,7 @@ export JAVA_OPTS="-javaagent:/opt/atlassian-agent.jar ${JAVA_OPTS}"
 
 #### 计算破解码
 
-:::info
+:::tip
 以下命令中：
 - `jira`，`conf`，`crowd` 是对应的应用名。
 - `-m` 为邮箱，`-n` 为用户名，`-o` 为网址，可任意填写。
