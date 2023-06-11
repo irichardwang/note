@@ -100,6 +100,12 @@ dnf install java-17-openjdk
 export JAVA_OPTS="-javaagent:/opt/atlassian-agent.jar ${JAVA_OPTS}"
 ```
 
+#### 重启容器
+
+:::tip
+完成前两步后，需要重启容器，让环境变量生效，才能进行下一步。
+:::
+
 #### 计算破解码
 
 :::info
@@ -112,3 +118,24 @@ export JAVA_OPTS="-javaagent:/opt/atlassian-agent.jar ${JAVA_OPTS}"
 ```bash
 java -jar /opt/atlassian-agent.jar -d -p jira -m admin@verystation.com -n admin -o https://verystation.com -s BTHV-5X2G-8XNJ-ZHZG
 ```
+
+## 版本升级
+
+#### 拉取最新镜像
+
+```bash
+docker pull atlassian/confluence
+```
+
+#### 停止并删除容器
+
+```bash
+docker stop confluence
+docker rm confluence
+```
+
+#### 重新创建容器并破解
+
+1. 用初次安装命令重新创建容器。
+2. 重复破解步骤，上传破解工具到新创建的容器内，并在新的容器中配置Java变量。
+3. 重启容器，升级完成。
