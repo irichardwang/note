@@ -69,8 +69,8 @@ docker volume create --name confluenceVolume
 ```bash
 docker run \
   -v confluenceVolume:/var/atlassian/application-data/confluence \
-  --name="confluence" -d -p 8090:8090 \
-  -p 8091:8091 -e ATL_PROXY_NAME='confluence.verystation.com' \
+  --name="confluence" -d -p 8090:8090 -p 8091:8091 \
+  -e ATL_PROXY_NAME='confluence.verystation.com' \
   -e ATL_PROXY_PORT='443' \
   -e ATL_TOMCAT_SCHEME='https' \
   -e ATL_TOMCAT_SECURE='true' \
@@ -96,7 +96,7 @@ dnf install java-17-openjdk
 
 #### 配置Java环境变量
 
-将下面的内容添加到宿主机和容器内的全局变量，如果是root用户，可以直接在 `/etc/profile` 里添加，如果是普通用户，可以在 `~/.bashrc` 里添加。
+将下面的内容添加到宿主机和容器内的全局变量，可以直接在 `/etc/profile` 里添加，也可以添加在 `/opt/confluence/bin/setenv.sh` 里。
 
 ```bash
 export JAVA_OPTS="-javaagent:/opt/atlassian-agent.jar ${JAVA_OPTS}"
