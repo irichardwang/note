@@ -102,7 +102,7 @@ export JAVA_OPTS="-javaagent:/opt/atlassian-agent.jar ${JAVA_OPTS}"
 
 #### 重启容器
 
-:::tip
+:::info
 完成前两步后，需要重启容器，让环境变量生效，才能进行下一步。
 :::
 
@@ -120,6 +120,10 @@ java -jar /opt/atlassian-agent.jar -d -p jira -m admin@verystation.com -n admin 
 ```
 
 ## 版本升级
+
+:::info
+此处以升级 Confluence 为例，其他应用替换命令中的软件名称即可。
+:::
 
 #### 拉取最新镜像
 
