@@ -26,7 +26,7 @@ tags: [github, gitlab]
 
 ### 配置镜像仓库
 
-在Gitlab仓库的设置中，选择`Repository`->`Mirroring repositories`，填入Github仓库的地址和上述生成的`Personal access tokens`，选择`Mirror direction`为`Pull`，点击`Mirror repository`即可完成配置。
+在Gitlab仓库的设置中，选择`Repository`->`Mirroring repositories`，填入Github仓库的地址和上述生成的`Personal access tokens`，选择`Mirror direction`为`Push`，点击`Mirror repository`即可完成配置。
 
 :::caution
 Github仓库地址的格式为`https://username@gitlab.company.com/group/project.git`，注意不要遗漏其中的`username@`。
