@@ -12,8 +12,7 @@ import LinkCard from '@site/src/components/LinkCard';
 Authentik是一个开源的身份认证和授权服务，支持多种认证方式，包括LDAP，SAML，OIDC，OAuth2等。相较老牌的Keycloak，Authentik更易于部署和维护。
 :::
 
-<LinkCard title="Authentik官方安装文档" description="Docker Compose installation" to="https://goauthentik.io/docs/installation/docker-compose" />
-
+<LinkCard title="Authentik官方安装文档" description="Docker Compose installation" to="https://goauthentik.io/docs/installation/docker-compose"></LinkCard>
 
 ## 准备工作
 
