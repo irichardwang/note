@@ -28,23 +28,23 @@ Coder-server是一款开源的在线IDE。
    ```bash
    version: "2.1"
    services:
-   code-server:
-   image: lscr.io/linuxserver/code-server:latest
-   container_name: code-server
-   environment:
-   - PUID=1000
-   - PGID=1000
-   - TZ=Asia/Shanghai
-   - PASSWORD=password #optional
-   - HASHED_PASSWORD= #optional
-   - SUDO_PASSWORD=password #optional
-   - SUDO_PASSWORD_HASH= #optional
-   - PROXY_DOMAIN=codeserver.my.domain #optional
-   - DEFAULT_WORKSPACE=/config/workspace #optional
-   volumes:
-   - /opt/codeserver/config:/config
-   ports:
-   - 8443:8443
-   restart: unless-stopped
+     code-server:
+       image: lscr.io/linuxserver/code-server:latest
+       container_name: code-server
+       environment:
+         - PUID=1000
+         - PGID=1000
+         - TZ=Asia/Shanghai
+         - PASSWORD=password #optional
+         - HASHED_PASSWORD= #optional
+         - SUDO_PASSWORD=password #optional
+         - SUDO_PASSWORD_HASH= #optional
+         - PROXY_DOMAIN=ide.example.com #optional
+         - DEFAULT_WORKSPACE=/config/workspace #optional
+       volumes:
+         - /opt/codeserver/config:/config
+       ports:
+         - 8443:8443
+       restart: unless-stopped
    ```
 
