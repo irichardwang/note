@@ -19,7 +19,7 @@ Nextcloud是一款开源的私有云存储软件，可以用来搭建私有网�
 1. 创建 docker-compose.yml 文件
 
     ```bash
-    version: '3'
+    version: '3.6'
     services:
       nextcloud:
         image: nextcloud/all-in-one:latest
@@ -31,7 +31,8 @@ Nextcloud是一款开源的私有云存储软件，可以用来搭建私有网�
         ports:
           - 8080:8080
         environment:
-          - AIO_DISABLE_BACKUP_SECTION=false 
+          - SKIP_DOMAIN_VALIDATION=true
+          - AIO_DISABLE_BACKUP_SECTION=true
           - APACHE_PORT=11000 
           - APACHE_IP_BINDING=127.0.0.1 
           - NEXTCLOUD_DATADIR=/mnt/ncdata 
