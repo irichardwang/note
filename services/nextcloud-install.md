@@ -18,6 +18,8 @@ Nextcloud是一款开源的私有云存储软件，可以用来搭建私有网�
 
 1. 创建 docker-compose.yml 文件
 
+   yaml文件参考：[nextcloud/all-in-one/compose.yaml](https://github.com/nextcloud/all-in-one/blob/main/compose.yaml)
+
     ```bash
     version: '3.6'
     services:
