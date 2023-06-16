@@ -87,6 +87,12 @@ const config = {
             activeBaseRegex: `/docs/`,
           },
           {
+            to: '/server/hardware',  // ./docs-system/Intro.md
+            label: '服务器',
+            position: 'left',
+            activeBaseRegex: `/server/`,
+          },
+          {
             to: '/linux/linux-intro',  // ./docs-system/Intro.md
             label: 'Linux',
             position: 'left',
@@ -158,6 +164,17 @@ const config = {
     }),
 
     plugins: [
+      [
+        '@docusaurus/plugin-content-docs',
+        {
+          id: 'server',
+          path: 'server',
+          routeBasePath: 'server',
+          sidebarPath: require.resolve('./sidebars.js'),
+          editUrl:
+              'https://github.com/erzhongwang/note/blob/main/',
+        },
+      ],
       [
         '@docusaurus/plugin-content-docs',
         {
