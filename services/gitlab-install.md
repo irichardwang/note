@@ -178,6 +178,10 @@ docker compose up -d
     ruby license.rb
     ```
 
+   :::caution
+   这一步在shell中显示的秘钥需要保存，最后在gitlab后台导入许可证时需要。
+   :::
+
 4. 替换默认公钥
 
     ```bash
