@@ -12,6 +12,11 @@ NTP服务端建议使用软路由自带的NTP服务器功能，爱快、梅林�
 ## NTP客户端配置
 
 #### 安装客户端
+
+:::tip
+RockyLinux9 默认安装了 `chrony` 时间同步服务，不需要再单独安装。
+:::
+
 ```bash
 dnf install -y chrony
 ```
@@ -27,6 +32,8 @@ chronyd -q 'server 192.168.100.1 iburst' # 修改为你的NTP服务器地址
 找到 `/etc/chrony.conf` 并修改
 
 ```bash title="/etc/chrony.conf"
+vim /etc/chrony.conf
+
 server 192.168.100.1 iburst
 ```
 
