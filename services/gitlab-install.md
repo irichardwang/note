@@ -207,3 +207,8 @@ docker compose up -d
     gitlab-ctl reconfigure
     gitlab-ctl restart
     ```
+   
+7. 导入许可证
+
+   登录 gitlab 后台，管理中心 -> 许可证 (/admin/license)，导入 GitLabBV.gitlab-license
+   可以选择 cat GitLabBV.gitlab-license 打印出文件内容后，把密钥复制后使用密钥文本。
