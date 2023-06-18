@@ -16,7 +16,9 @@ Gitlab是一个开源的一体化DevOps平台，包含了git仓库管理、issue
 对比了 bitbucket 和 Gitlab，虽然 Bitbucket 与 Atlassian 集成度更好，但破解工具对最新版本无效，网上 Gitlab 的教程也更多一些，界面风格与 Github 也更为接近，最终选用 Gitlab 作为版本管理平台。
 :::
 
-## 参数配置
+## 初次部署
+
+### 参数配置
 
 #### 常规`docker-compose.yml`文件
 
@@ -49,9 +51,7 @@ services:
 :::
 
 
-## 启动服务
-
-#### 初次启动服务
+### 启动服务
 
 ```bash
 docker-compose up -d
@@ -65,4 +65,109 @@ docker-compose up -d
 
 ```bash
 sudo docker exec -it gitlab-web-1 grep 'Password:' /etc/gitlab/initial_root_password
+```
+
+## Gitlab版本更新
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
+## Gitlab-ee破解
+
+1. 进入容器
+
+```bash
+sudo docker exec -it gitlab-web-1 /bin/bash
+```
+
+2. 创建文件 'vi lisence.rb'
+
+```ruby title="lisence.rb"
+require "openssl"  
+require "gitlab/license"  
+  
+key_pair = OpenSSL::PKey::RSA.generate(2048)  
+File.open("license_key", "w") { |f| f.write(key_pair.to_pem) }  
+  
+public_key = key_pair.public_key  
+File.open("license_key.pub", "w") { |f| f.write(public_key.to_pem) }  
+  
+private_key = OpenSSL::PKey::RSA.new File.read("license_key")  
+Gitlab::License.encryption_key = private_key  
+  
+license = Gitlab::License.new  
+license.licensee = {  
+"Name" => "wangchong",  
+"Company" => "wangchong",  
+"Email" => "admin@88one.one",  
+}  
+license.starts_at = Date.new(2023, 1, 1) # 开始时间  
+license.expires_at = Date.new(2100, 1, 1) # 结束时间  
+license.notify_admins_at = Date.new(2099, 12, 1)  
+license.notify_users_at = Date.new(2099, 12, 1)  
+license.block_changes_at = Date.new(2100, 1, 1)  
+license.restrictions = {  
+active_user_count: 100000,
+}  
+  
+puts "License:"  
+puts license  
+  
+data = license.export  
+puts "Exported license:"  
+puts data  
+File.open("GitLabBV.gitlab-license", "w") { |f| f.write(data) }  
+  
+public_key = OpenSSL::PKey::RSA.new File.read("license_key.pub")  
+Gitlab::License.encryption_key = public_key  
+  
+data = File.read("GitLabBV.gitlab-license")  
+$license = Gitlab::License.import(data)  
+  
+puts "Imported license:"  
+puts $license  
+  
+unless $license  
+raise "The license is invalid."  
+end  
+  
+if $license.restricted?(:active_user_count)  
+active_user_count = 100000  
+if active_user_count > $license.restrictions[:active_user_count]  
+    raise "The active user count exceeds the allowed amount!"  
+end  
+end  
+  
+if $license.notify_admins?  
+puts "The license is due to expire on #{$license.expires_at}."  
+end  
+  
+if $license.notify_users?  
+puts "The license is due to expire on #{$license.expires_at}."  
+end  
+  
+module Gitlab  
+class GitAccess  
+    def check(cmd, changes = nil)  
+    if $license.block_changes?  
+        return build_status_object(false, "License expired")  
+    end  
+    end  
+end  
+end  
+  
+puts "This instance of GitLab Enterprise Edition is licensed to:"  
+$license.licensee.each do |key, value|  
+puts "#{key}: #{value}"  
+end  
+  
+if $license.expired?  
+puts "The license expired on #{$license.expires_at}"  
+elsif $license.will_expire?  
+puts "The license will expire on #{$license.expires_at}"  
+else  
+puts "The license will never expire."  
+end
 ```
