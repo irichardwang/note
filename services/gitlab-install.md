@@ -82,7 +82,7 @@ docker compose up -d
 sudo docker exec -it gitlab-web-1 /bin/bash
 ```
 
-2. 创建文件 'vi lisence.rb'
+2. 创建文件 `vi lisence.rb`
 
 ```ruby title="lisence.rb"
 require "openssl"  
