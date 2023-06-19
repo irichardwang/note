@@ -6,8 +6,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: '二中的折腾日志',
-  tagline: 'Dinosaurs are cool',
+  title: '王小冲的折腾笔记',
+  tagline: '爱折腾的小朋友',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -18,7 +18,7 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'verystation', // Usually your GitHub org/user name.
+  organizationName: 'wangchong', // Usually your GitHub org/user name.
   projectName: 'docusaurus', // Usually your repo name.
 
   onBrokenLinks: 'throw',
@@ -74,7 +74,7 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: '二中的折腾日志',
+        title: '王小冲的折腾笔记',
         logo: {
           alt: 'My Site Logo',
           src: 'img/logo.svg',
