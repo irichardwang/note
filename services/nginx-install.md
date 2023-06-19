@@ -55,3 +55,23 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
 ```
+
+
+#### DNSPOD API Token
+
+[API 密钥 - DNSPod-免费智能DNS解析服务商-电信_网通_教育网,智能DNS](https://console.dnspod.cn/account/token/apikey)
+
+
+#### 问题解决
+
+:::warning
+在提交后出现了以下错误：`ModuleNotFoundError: No module named 'zope'`
+:::
+
+```Bash
+docker exec -it nginx-app-1 /bin/bash
+```
+
+```bash
+pip install zope
+```
