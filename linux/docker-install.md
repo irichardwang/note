@@ -6,7 +6,7 @@ sidebar_position: 7
 
 import LinkCard from '@site/src/components/LinkCard';
 
-<LinkCard title="Docker官方安装文档" description="Install Docker Engine on CentOS | Docker Documentation" to="https://docs.docker.com/engine/install/centos/#install-using-the-repository" />
+<LinkCard title="Docker官方安装文档" description="Install Docker Engine on CentOS | Docker Documentation" to="https://docs.docker.com/engine/install/centos/#install-using-the-repository"></LinkCard>
 
 ## Docker的官方源安装
 
@@ -26,7 +26,7 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 
 #### Docker的安装命令
 ```bash
-yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 #### 启动docker
