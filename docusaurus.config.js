@@ -11,7 +11,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://docs.wangchong.wang',
+  url: 'https://www.wangchong.wang',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -32,7 +32,7 @@ const config = {
     locales: ['en'],
   },
 
-  scripts: [{src: "https://plausible.verystation.com/js/script.js", defer: true, 'data-domain': 'docs.wangchong.wang'}],
+  scripts: [{src: "https://plausible.verystation.com/js/script.js", defer: true, 'data-domain': 'www.wangchong.wang'}],
 
   presets: [
     [
