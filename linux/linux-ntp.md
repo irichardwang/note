@@ -31,9 +31,11 @@ chronyd -q 'server 192.168.100.1 iburst' # 修改为你的NTP服务器地址
 
 找到 `/etc/chrony.conf` 并修改
 
-```bash title="/etc/chrony.conf"
+```bash 
 vim /etc/chrony.conf
+```
 
+```bash title="/etc/chrony.conf"
 server 192.168.100.1 iburst
 ```
 
