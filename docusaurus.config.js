@@ -32,7 +32,7 @@ const config = {
     locales: ['en'],
   },
 
-  scripts: [{src: "https://plausible.verystation.com/js/script.js", defer: true, 'data-domain': 'www.wangchong.wang'}],
+  scripts: [{src: "https://plausible.homelab.wang/js/script.js", defer: true, 'data-domain': 'www.wangchong.wang'}],
 
   presets: [
     [
