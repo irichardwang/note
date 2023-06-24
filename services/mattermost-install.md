@@ -29,6 +29,24 @@ cp env.example .env
 至少需要修改`Domain`参数，指向之后将要访问Mattermost的域名。
 :::
 
+```bash title="我修改的内容如下"
+# 修改为个人域名
+DOMAIN=mattermost.homelab.wang
+
+# 时区设置为国内时区
+TZ=Asia/Shanghai
+
+# 为了后续升级方便，数据库版本设置为最新
+POSTGRES_IMAGE_TAG=15-alpine
+
+# 修改默认的数据库密码
+POSTGRES_PASSWORD=your_password
+
+# 修改安装的版本
+MATTERMOST_IMAGE=mattermost-team-edition
+MATTERMOST_IMAGE_TAG=latest
+```
+
 ## 数据持久化
 
 ```bash
