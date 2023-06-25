@@ -15,7 +15,7 @@ import LinkCard from '@site/src/components/LinkCard';
 #### 克隆官方Docker仓库
 ```bash
 git clone https://github.com/mattermost/docker
-cd services
+cd docker
 ```
 
 #### 复制`.env`配置文件
@@ -42,8 +42,7 @@ POSTGRES_IMAGE_TAG=15-alpine
 # 修改默认的数据库密码
 POSTGRES_PASSWORD=your_password
 
-# 修改安装的版本
-MATTERMOST_IMAGE=mattermost-team-edition
+# 修改安装的版本为最新
 MATTERMOST_IMAGE_TAG=latest
 ```
 
