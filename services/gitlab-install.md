@@ -28,10 +28,10 @@ services:
   web:
     image: 'gitlab/gitlab-ee:latest'
     restart: always
-    hostname: 'gitlab.verystation.com'
+    hostname: 'gitlab.homelab.wang'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.verystation.com'
+        external_url 'https://gitlab.homelab.wang'
         # Add any other gitlab.rb configuration here, each on its own line
     ports:
       - '80:80'
@@ -99,8 +99,8 @@ docker compose up -d
       
     license = Gitlab::License.new  
     license.licensee = {  
-    "Name" => "wangchong",  
-    "Company" => "wangchong",  
+    "Name" => "Homelab",  
+    "Company" => "Homelab",  
     "Email" => "admin@88one.one",  
     }  
     license.starts_at = Date.new(2023, 1, 1) # 开始时间  
