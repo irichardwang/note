@@ -94,12 +94,28 @@ dnf install java-17-openjdk
 这里选择 `/opt/agent/atlassian-agent.jar`
 :::
 
-#### 配置Java环境变量
+#### 宿主机配置Java环境变量
 
 将下面的内容添加到宿主机和容器内的全局变量，可以直接在 `/etc/profile` 里添加，也可以添加在 `/opt/atlassian/jira/bin/setenv.sh` 里。
 
 ```bash title="宿主机"
 vim /etc/profile
+```
+
+```bash
+export JAVA_OPTS="-javaagent:/opt/agent/atlassian-agent.jar ${JAVA_OPTS}"
+```
+
+```Bash
+source /etc/profile
+```
+
+#### 容器内配置Java环境变量
+
+```Bash title="进入容器"
+docker exec -it jira /bin/bash
+
+docker exec -it confluence /bin/bash
 ```
 
 ```bash title="容器内"
