@@ -120,6 +120,8 @@ docker exec -it confluence /bin/bash
 
 ```bash title="容器内"
 vim /opt/atlassian/jira/bin/setenv.sh
+
+vim /opt/atlassian/confluence/bin/setenv.sh
 ```
 
 ```bash
@@ -142,7 +144,7 @@ export JAVA_OPTS="-javaagent:/opt/agent/atlassian-agent.jar ${JAVA_OPTS}"
 :::
 
 ```bash
-java -jar /opt/atlassian-agent.jar -d -p jira -m admin@verystation.com -n admin -o https://verystation.com -s BTHV-5X2G-8XNJ-ZHZG
+java -jar /opt/agent/atlassian-agent.jar -d -p jira -m admin@homelab.wang -n admin -o https://homelab.wang -s BXAY-7KCQ-MXW2-K6D8
 ```
 
 ## 版本升级
