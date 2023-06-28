@@ -145,43 +145,51 @@ volumes:
 
 ## 破解
 
-#### 宿主机安装Java
+### 宿主机配置
+
+1. 安装 Java
+
+由于宿主机使用了minimal安装，没有自带Java。若系统中已有，可以跳过该步。
 
 ```bash
 dnf install java-17-openjdk
 ```
 
-#### 上传破解工具到宿主机和容器
+2. 上传破解工具到宿主机和容器
 
 :::tip
-宿主机和容器内的存放位置最好一致，方便后续配置Java变量。
-
-这里选择 `/opt/agent/atlassian-agent.jar`
+上传破解文件到 `/opt/agent/`。在 yml 文件中，我们映射了宿主机和容器内相同的存放位置，方便后续配置Java变量。
 :::
 
-#### 宿主机配置Java环境变量
+3. 配置Java环境变量
 
-将下面的内容添加到宿主机和容器内的全局变量，可以直接在 `/etc/profile` 里添加，也可以添加在 `/opt/atlassian/jira/bin/setenv.sh` 里。
+将下面的内容添加到宿主机和容器内的全局变量，添加到 `/etc/profile` 里。
 
-```bash title="宿主机"
+```bash
 vim /etc/profile
 ```
 
-```bash
+```bash title="添加内容"
 export JAVA_OPTS="-javaagent:/opt/agent/atlassian-agent.jar ${JAVA_OPTS}"
 ```
+
+4. 生效配置
+
+重启或运行以下命令。
 
 ```Bash
 source /etc/profile
 ```
 
-#### 容器内配置Java环境变量
+### 容器内配置
 
 1. 进入容器
 
   ```Bash
+  # 进入 jira 容器
   docker exec -it jira /bin/bash
 
+  # 进入 Confluence 容器
   docker exec -it confluence /bin/bash
   ```
 
@@ -207,14 +215,24 @@ source /etc/profile
   ```bash
   export JAVA_OPTS="-javaagent:/opt/agent/atlassian-agent.jar ${JAVA_OPTS}"
   ```
+5. 退出容器
 
-#### 重启容器
+  ```bash
+  exit
+  ```
+
+6. 重启容器
 
 :::info
 完成前两步后，需要重启容器，让环境变量生效，才能进行下一步。
 :::
 
-#### 计算破解码
+```bash
+docker restart jira
+docker restart confluence
+```
+
+### 计算破解码
 
 :::tip
 以下命令中：
