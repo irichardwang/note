@@ -252,3 +252,13 @@ java -jar /opt/agent/atlassian-agent.jar -d -p jira -m admin@homelab.wang -n adm
 docker compose pull
 docker compose up -d
 ```
+
+---
+
+过程的参考文档
+
+- [How to set the timezone for docker container | Atlassian Support | Atlassian Documentation](https://confluence.atlassian.com/kb/how-to-set-the-timezone-for-docker-container-976780914.html)
+
+- [Configuring System Properties | Confluence Data Center and Server 5.9 | Atlassian Documentation](https://confluence.atlassian.com/conf59/configuring-system-properties-792499726.html)
+
+- [Setting properties and options on startup | Administering Jira applications Data Center and Server 9.9 | Atlassian Documentation](https://confluence.atlassian.com/adminjiraserver/-setting-properties-and-options-on-startup-938847831.html)
