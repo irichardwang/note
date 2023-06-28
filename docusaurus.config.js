@@ -7,11 +7,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: '王小冲的折腾笔记',
-  tagline: '爱折腾的小朋友',
+  tagline: 'Homelab搭建日志',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://www.wangchong.wang',
+  url: 'https://wangchong.wang',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -32,7 +32,7 @@ const config = {
     locales: ['en'],
   },
 
-  scripts: [{src: "https://plausible.homelab.wang/js/script.js", defer: true, 'data-domain': 'www.wangchong.wang'}],
+  scripts: [{src: "https://plausible.homelab.wang/js/script.js", defer: true, 'data-domain': 'wangchong.wang'}],
 
   presets: [
     [
@@ -74,7 +74,7 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: '王小冲的折腾笔记',
+        title: 'Homelab折腾笔记',
         logo: {
           alt: 'My Site Logo',
           src: 'img/logo.svg',
