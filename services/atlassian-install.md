@@ -12,7 +12,8 @@ tags:
 import LinkCard from '@site/src/components/LinkCard';
 
 :::note
-翻了全网对 Atlassian 软件(crowd, jira, confluence)的安装教程都是上古版本。其实官方提供了非常方便的 Docker 镜像，但说明文档中仅提供了单独的 docker run 命令，在此提供一份整合了数据库 docker-compose 文件，实现快速部署。同时补充了优化参数。
+翻了全网对 Atlassian 软件(crowd, jira, confluence)的安装教程都是上古版本。其实官方提供了非常方便的 Docker 镜像，但说明文档中仅提供了单独的 docker run 命令。
+在此提供一份整合了数据库 docker-compose 文件，实现快速部署，同时补充了优化参数。编写时软件的最新版本为 Jira9.9 和 Confluence8.3。
 :::
 
 ## 编写 `docker-compose.yml` 文件
@@ -149,37 +150,37 @@ volumes:
 
 1. 安装 Java
 
-由于宿主机使用了minimal安装，没有自带Java。若系统中已有，可以跳过该步。
+  由于宿主机使用了minimal安装，没有自带Java。若系统中已有，可以跳过该步。
 
-```bash
-dnf install java-17-openjdk
-```
+  ```bash
+  dnf install java-17-openjdk
+  ```
 
 2. 上传破解工具到宿主机和容器
 
-:::tip
-上传破解文件到 `/opt/agent/`。在 yml 文件中，我们映射了宿主机和容器内相同的存放位置，方便后续配置Java变量。
-:::
+  :::tip
+  上传破解文件到 `/opt/agent/`。在 yml 文件中，我们映射了宿主机和容器内相同的存放位置，方便后续配置Java变量。
+  :::
 
 3. 配置Java环境变量
 
-将下面的内容添加到宿主机和容器内的全局变量，添加到 `/etc/profile` 里。
+  将下面的内容添加到宿主机和容器内的全局变量，添加到 `/etc/profile` 里。
 
-```bash
-vim /etc/profile
-```
+  ```bash
+  vim /etc/profile
+  ```
 
-```bash title="添加内容"
-export JAVA_OPTS="-javaagent:/opt/agent/atlassian-agent.jar ${JAVA_OPTS}"
-```
+  ```bash title="添加内容"
+  export JAVA_OPTS="-javaagent:/opt/agent/atlassian-agent.jar ${JAVA_OPTS}"
+  ```
 
 4. 生效配置
 
-重启或运行以下命令。
+  重启或运行以下命令。
 
-```Bash
-source /etc/profile
-```
+  ```Bash
+  source /etc/profile
+  ```
 
 ### 容器内配置
 
@@ -223,14 +224,14 @@ source /etc/profile
 
 6. 重启容器
 
-:::info
-完成前两步后，需要重启容器，让环境变量生效，才能进行下一步。
-:::
+  :::info
+  完成前两步后，需要重启容器，让环境变量生效，才能进行下一步。
+  :::
 
-```bash
-docker restart jira
-docker restart confluence
-```
+  ```bash
+  docker restart jira
+  docker restart confluence
+  ```
 
 ### 计算破解码
 
