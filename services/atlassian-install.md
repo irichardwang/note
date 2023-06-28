@@ -177,21 +177,36 @@ source /etc/profile
 
 #### 容器内配置Java环境变量
 
-```Bash title="进入容器"
-docker exec -it jira /bin/bash
+1. 进入容器
 
-docker exec -it confluence /bin/bash
-```
+  ```Bash
+  docker exec -it jira /bin/bash
 
-```bash title="容器内"
-vim /opt/atlassian/jira/bin/setenv.sh
+  docker exec -it confluence /bin/bash
+  ```
 
-vim /opt/atlassian/confluence/bin/setenv.sh
-```
+2. 安装 `vim` 工具
 
-```bash
-export JAVA_OPTS="-javaagent:/opt/agent/atlassian-agent.jar ${JAVA_OPTS}"
-```
+  由于要在容器内添加 Java 环境变量，先安装 vim 编辑工具
+
+  ```bash
+  apt update
+  apt install vim
+  ```
+
+3. 编辑 `setenv.sh` 文件
+
+  ```bash
+  vim /opt/atlassian/jira/bin/setenv.sh
+
+  vim /opt/atlassian/confluence/bin/setenv.sh
+  ```
+
+4. 在末尾添加该行
+
+  ```bash
+  export JAVA_OPTS="-javaagent:/opt/agent/atlassian-agent.jar ${JAVA_OPTS}"
+  ```
 
 #### 重启容器
 
