@@ -12,70 +12,135 @@ tags:
 import LinkCard from '@site/src/components/LinkCard';
 
 :::note
-翻了全网对 Atlassian 软件(crowd, jira, confluence)的安装教程都是上古版本。其实官方提供了非常方便的 Docker 镜像，此处贴一发最新版本的安装 Docker 安装命令，为小白做个指导。
+翻了全网对 Atlassian 软件(crowd, jira, confluence)的安装教程都是上古版本。其实官方提供了非常方便的 Docker 镜像，但说明文档中仅提供了单独的 docker run 命令，在此提供一份整合了数据库 docker-compose 文件，实现快速部署。同时补充了优化参数。
 :::
 
-## 安装说明
+## 编写 `docker-compose.yml` 文件
 
-- 为每个应用创建数据卷，数据卷在移除容器时不会被删除，方便日后升级或迁移。
-- 若使用 Nginx 反向代理，通过域名访问应用，需要添加 `ATL_PROXY_NAME`，`ATL_PROXY_PORT`，`ATL_TOMCAT_SCHEME`，`ATL_TOMCAT_SECURE` 环境变量。若计划直接通过 IP 访问可删除这几个环境配置。
+### 优化参数说明
+
+1. 挂载破解文件路径
+
+  创建 `/opt/agent` 文件夹，在 yml 文件中的 volumes 部分添加 `- /opt/agent:/opt/agent`。
+
+2. 使用nginx反代时需添加的参数
+
+  若使用反向代理工具如 nginx，需要在 yml 文件中的 environment 部分添加以下参数：`ATL_PROXY_NAME`、`ATL_PROXY_PORT`、`ATL_TOMCAT_SCHEME`、`ATL_TOMCAT_SECURE`。若不使用，可以删掉或注释掉。
+
+3. 设置容器和软件默认的时区
+
+  在 yml 文件中的 environment 部分添加 `- TZ=Asia/Shanghai`，以及 `- JVM_SUPPORT_RECOMMENDED_ARGS=-Duser.timezone=Asia/Shanghai`。
+
+4. 扩大JVM内存资源上限
+
+  当用户和内容增多之后，JVM内存资源不足会导致软件运行缓慢。此时可以通过扩大JVM内存资源上限来解决，当然也要看服务器的硬件资源是否足够。具体调整参数详见样例文件的中的 `JVM_MINIMUM_MEMORY`、`JVM_MAXIMUM_MEMORY`、`JVM_RESERVED_CODE_CACHE_SIZE`。
+  如果是初次使用，可以先删掉或注释掉，等到需要时再调整。
+
+5. 设置Confluence字体文件路径
+
+  在准备放置 `docker-compose.yml` 文件的目录下创建 `fonts` 文件夹，将字体文件放入其中。
+  在 yml 文件中的 volumes 部分添加 `- ./fonts:/usr/local/share/fonts`。
+
+6. 集成 PostgreSQL 数据库
+
+  :::tip
+  Atlassian 因授权限制默认不集成 mysql 驱动，因此使用 PostgreSQL 数据库，截止目前(2023.06)，支持到 PostgreSQL 14。
+  :::
+
+### `docker-compose.yml` 样例
 
 :::caution
-如果打算把软件反代到自己的域名，那么上述几个参数的配置非常重要，否则会导致应用内报错。反之，如果只是内网环境用IP+端口的方式使用，则不需要这几个参数，可以在Docker命令里删掉。
+注意修改以下带有注释的参数。
 :::
 
-## Crowd
+```bash title='docker-compose.yml'
+version: '3.8'
+services:
+  jira:
+    image: atlassian/jira-software
+    container_name: jira
+    depends_on: 
+      - dbjira
+    ports:
+      - 8080:8080
+    volumes:
+      - jiraVolume:/var/atlassian/application-data/jira
+      - /opt/agent:/opt/agent
+    environment:
+      - ATL_PROXY_NAME=jira.homelab.wang # 更改为自己的域名
+      - ATL_PROXY_PORT=443
+      - ATL_TOMCAT_SCHEME=https
+      - ATL_TOMCAT_SECURE=true
+      - ATL_JDBC_URL=jdbc:postgresql://dbjira:5432/jira
+      - ATL_JDBC_USER=jira
+      - ATL_JDBC_PASSWORD="password" # 这里的密码要和数据库的密码一致
+      - ATL_DB_TYPE=postgres72
+      - ATL_DB_DRIVER=org.postgresql.Driver
+      - TZ=Asia/Shanghai
+      - JVM_MINIMUM_MEMORY=1024m # 默认为384m，视实际情况调整
+      - JVM_MAXIMUM_MEMORY=2048m # 默认为768m，视实际情况调整
+      - JVM_RESERVED_CODE_CACHE_SIZE=1024m # 默认为512m，视实际情况调整
+      - JVM_SUPPORT_RECOMMENDED_ARGS=-Duser.timezone=Asia/Shanghai
+    restart: always
 
-```bash
-docker volume create --name crowdVolume
-```
+  confluence:
+    image: atlassian/confluence
+    container_name: confluence
+    depends_on: 
+      - dbconf
+    ports:
+      - 8090:8090
+      - 8091:8091
+    environment:
+      - ATL_PROXY_NAME=conf.homelab.wang # 更改为自己的域名
+      - ATL_PROXY_PORT=443
+      - ATL_TOMCAT_SCHEME=https
+      - ATL_TOMCAT_SECURE=true
+      - ATL_JDBC_URL=jdbc:postgresql://dbconf:5432/conf
+      - ATL_JDBC_USER=conf
+      - ATL_JDBC_PASSWORD="password" # 这里的密码要和数据库的密码一致
+      - ATL_DB_TYPE=postgresql
+      - TZ=Asia/Shanghai
+      - JVM_MINIMUM_MEMORY=2048m # 默认为1024m，视实际情况调整
+      - JVM_MAXIMUM_MEMORY=4096m # 默认为1024m，视实际情况调整
+      - JVM_RESERVED_CODE_CACHE_SIZE=512m # 默认为256m，视实际情况调整
+      - JVM_SUPPORT_RECOMMENDED_ARGS=-Duser.timezone=Asia/Shanghai
+      - CATALINA_OPTS=-Dconfluence.document.conversion.fontpath=/usr/local/share/fonts/
+    volumes:
+      - confluenceVolume:/var/atlassian/application-data/confluence
+      - /opt/agent:/opt/agent
+      - ./fonts:/usr/local/share/fonts
+    restart: always
 
-```bash
-docker run \
-  -v crowdVolume:/var/atlassian/application-data/crowd \
-  --name="crowd" -d -p 8095:8095 \
-  -e ATL_PROXY_NAME='crowd.verystation.com' \
-  -e ATL_PROXY_PORT='443' \
-  -e ATL_TOMCAT_SCHEME='https' \
-  -e ATL_TOMCAT_SECURE='true' \
-  --restart=always \
-  atlassian/crowd
-```
+  dbjira:
+    image: docker.io/bitnami/postgresql:14
+    ports:
+      - '5432:5432' # 如果不打算暴露数据库端口，可以注释掉
+    volumes:
+      - 'dbjira_data:/bitnami/postgresql'
+    environment:
+      - POSTGRESQL_USERNAME=jira
+      - POSTGRESQL_DATABASE=jira
+      - POSTGRESQL_PASSWORD="password" # 请设置为自己的密码
+    restart: always
 
-## Jira
+  dbconf:
+    image: docker.io/bitnami/postgresql:14
+    ports:
+      - '6432:5432' # 如果不打算暴露数据库端口，可以注释掉
+    volumes:
+      - 'dbconf_data:/bitnami/postgresql'
+    environment:
+      - POSTGRESQL_USERNAME=conf
+      - POSTGRESQL_DATABASE=conf
+      - POSTGRESQL_PASSWORD="password" # 请设置为自己的密码
+    restart: always
 
-```bash
-docker volume create --name jiraVolume
-```
-
-```bash
-docker run \
-  -v jiraVolume:/var/atlassian/application-data/jira \
-  --name="jira" -d -p 8080:8080 \
-  -e ATL_PROXY_NAME='jira.verystation.com' \
-  -e ATL_PROXY_PORT='443' \
-  -e ATL_TOMCAT_SCHEME='https' \
-  -e ATL_TOMCAT_SECURE='true' \
-  --restart=always \
-  atlassian/jira-software
-```
-
-## Confluence
-
-```bash
-docker volume create --name confluenceVolume
-```
-
-```bash
-docker run \
-  -v confluenceVolume:/var/atlassian/application-data/confluence \
-  --name="confluence" -d -p 8090:8090 -p 8091:8091 \
-  -e ATL_PROXY_NAME='confluence.verystation.com' \
-  -e ATL_PROXY_PORT='443' \
-  -e ATL_TOMCAT_SCHEME='https' \
-  -e ATL_TOMCAT_SECURE='true' \
-  --restart=always \
-  atlassian/confluence
+volumes:
+  dbjira_data: 
+  dbconf_data:
+  jiraVolume: 
+  confluenceVolume:
 ```
 
 ## 破解
@@ -149,25 +214,7 @@ java -jar /opt/agent/atlassian-agent.jar -d -p jira -m admin@homelab.wang -n adm
 
 ## 版本升级
 
-:::info
-此处以升级 Confluence 为例，其他应用替换命令中的软件名称即可。
-:::
-
-#### 拉取最新镜像
-
 ```bash
-docker pull atlassian/confluence
+docker compose pull
+docker compose up -d
 ```
-
-#### 停止并删除容器
-
-```bash
-docker stop confluence
-docker rm confluence
-```
-
-#### 重新创建容器并破解
-
-1. 用初次安装命令重新创建容器。
-2. 重复破解步骤，上传破解工具到新创建的容器内，并在新的容器中配置Java变量。
-3. 重启容器，升级完成。
