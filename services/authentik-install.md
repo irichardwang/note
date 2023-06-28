@@ -22,6 +22,10 @@ Authentik是一个开源的身份认证和授权服务，支持多种认证方�
 wget https://goauthentik.io/docker-compose.yml
 ```
 
+1. 为避免后续升级迁移，更改 postgresql 版本为 15，原版为 12。
+
+2. 若对安全性有进一步要求，在相应位置更改默认的数据库密码。
+
 #### 安装 `pwgen`
 
 :::caution

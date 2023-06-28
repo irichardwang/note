@@ -262,3 +262,5 @@ docker compose up -d
 - [Configuring System Properties | Confluence Data Center and Server 5.9 | Atlassian Documentation](https://confluence.atlassian.com/conf59/configuring-system-properties-792499726.html)
 
 - [Setting properties and options on startup | Administering Jira applications Data Center and Server 9.9 | Atlassian Documentation](https://confluence.atlassian.com/adminjiraserver/-setting-properties-and-options-on-startup-938847831.html)
+
+- [Recognized System Properties](https://confluence.atlassian.com/doc/recognized-system-properties-190430.html)
