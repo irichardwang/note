@@ -32,16 +32,10 @@ const config = {
     locales: ['en'],
   },
 
-  script: [
+  scripts: [
     {
       src: 'https://matomo.homelab.wang/matomo.js',
       async: true,
-    },
-    {
-      src: 'https://matomo.homelab.wang/matomo.php',
-      async: true,
-    },
-    {
       innerHTML: `
       var _paq = window._paq = window._paq || [];
       /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
