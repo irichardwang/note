@@ -11,7 +11,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://wangchong.wang',
+  url: 'https://docs.wangchong.wang',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -32,7 +32,31 @@ const config = {
     locales: ['en'],
   },
 
-  scripts: [{src: "https://plausible.homelab.wang/js/script.js", defer: true, 'data-domain': 'wangchong.wang'}],
+  script: [
+    {
+      src: 'https://matomo.homelab.wang/matomo.js',
+      async: true,
+    },
+    {
+      src: 'https://matomo.homelab.wang/matomo.php',
+      async: true,
+    },
+    {
+      innerHTML: `
+      var _paq = window._paq = window._paq || [];
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//matomo.homelab.wang/";
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
+        _paq.push(['setSiteId', '1']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+      })();
+      `,
+    },
+  ],
 
   presets: [
     [
