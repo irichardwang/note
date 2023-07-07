@@ -133,5 +133,24 @@ vim /etc/fstab
 
 ### 11. 配置时间同步
 
+:::tip
+Rocky Linux 9.2 默认使用 chrony 作为时间同步服务。而 CentOS 7 默认使用 ntpd 作为时间同步服务。
+:::
+
+```bash
+vim /etc/chrony.conf
+```
+
+```bash
+...
+server ntp.aliyun.com iburst
+...
+```
+
+```bash
+systemctl restart chronyd && systemctl status chronyd
+systemctl start chronyd
+systemctl enable chronyd
+```
 
 
