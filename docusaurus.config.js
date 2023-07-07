@@ -83,7 +83,13 @@ const config = {
             label: 'Homelab',
             position: 'left',
             activeBaseRegex: `/homelab/`,
-          },          
+          },
+          {
+            to: '/bigdata/intro',    // ./docs/Intro.md
+            label: '大数据',
+            position: 'left',
+            activeBaseRegex: `/bigdata/`,
+          },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/facebook/docusaurus',
