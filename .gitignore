@@ -8,9 +8,6 @@
 .docusaurus
 .cache-loader
 
-.idea
-
-
 # Misc
 .DS_Store
 .env.local
@@ -21,3 +18,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# 编辑工具
+.idea
+.devcontainer
