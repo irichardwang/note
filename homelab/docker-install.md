@@ -1,5 +1,6 @@
 ---
 sidebar_position: 7
+sidebar_label: Docker安装
 ---
 
 # Docker的安装部署
