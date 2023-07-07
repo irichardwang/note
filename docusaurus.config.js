@@ -79,10 +79,10 @@ const config = {
         //    label: 'Tutorial',
         //  },
           {
-            to: '/app/intro',    // ./docs/Intro.md
-            label: '我的应用',
+            to: '/homelab/intro',    // ./docs/Intro.md
+            label: 'Homelab',
             position: 'left',
-            activeBaseRegex: `/app/`,
+            activeBaseRegex: `/homelab/`,
           },          
           {to: '/blog', label: 'Blog', position: 'left'},
           {
@@ -147,9 +147,20 @@ const config = {
       [
         '@docusaurus/plugin-content-docs',
         {
-          id: 'app',
-          path: 'app',
-          routeBasePath: 'app',
+          id: 'homelab',
+          path: 'homelab',
+          routeBasePath: 'homelab',
+          sidebarPath: require.resolve('./sidebars.js'),
+          editUrl:
+            'https://github.com/erzhongwang/note/blob/main/',
+        }, 
+      ],
+      [
+        '@docusaurus/plugin-content-docs',
+        {
+          id: 'bigdata',
+          path: 'bigdata',
+          routeBasePath: 'bigdata',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
             'https://github.com/erzhongwang/note/blob/main/',
