@@ -127,11 +127,11 @@ systemctl enable chronyd
 
 1. 创建目录
     ```bash
-    mkdir -p /bigdata/server
-    mkdir -p /bigdata/package
+    mkdir -p /bigdata/server # 用于存放软件
+    mkdir -p /bigdata/package # 用于存放安装包
     ```
 
-2. 上传 jdk-8u371-linux-x64.tar.gz 到 /bigdata/package 目录
+2. 上传 `jdk-8u371-linux-x64.tar.gz` 到 `/bigdata/package` 目录
 
 3. 解压
     ```bash
@@ -141,6 +141,25 @@ systemctl enable chronyd
 4. 创建软链接
     ```bash
     ln -s /bigdata/server/jdk1.8.0_371 /bigdata/server/jdk
+    ```
+
+5. 配置环境变量
+    ```bash
+    vim /etc/profile
+    ```
+
+    ```bash
+    export JAVA_HOME=/bigdata/server/jdk
+    export PATH=$PATH:$JAVA_HOME/bin
+    ```
+
+    ```bash
+    source /etc/profile
+    ```
+
+6. 配置 JAVA 执行程序的软链接
+    ```bash
+    ln -s /bigdata/server/jdk/bin/java /usr/bin/java
     ```
 
 ### 11. 配置 hadoop 用户 sudo 权限
