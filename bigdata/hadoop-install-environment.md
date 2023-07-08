@@ -1,6 +1,7 @@
 ---
 title: Hadoop安装部署--环境准备
 sidebar_position: 2
+sidebar_label: 环境准备
 ---
 
 :::info
