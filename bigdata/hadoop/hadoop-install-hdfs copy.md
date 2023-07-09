@@ -67,4 +67,27 @@ hdfs dfs -cat <path> | more
 ```bash
 hdfs dfs -get [-f] [-p] <src> ... <localdst>
 ```
-    
+
+### 6. 拷贝文件
+
+```bash
+hdfs dfs -cp [-f] <src> ... <dst>
+```
+
+### 7. 追加数据
+
+```bash
+hdfs dfs -appendToFile <localsrc> ... <dst>
+```
+
+### 8. 移动文件
+
+```bash
+hdfs dfs -mv <src> ... <dst>
+```
+
+### 9. 删除文件
+
+```bash
+hdfs dfs -rm [-r] [-skipTrash] URI [URI ...]
+```
