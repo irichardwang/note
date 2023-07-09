@@ -91,3 +91,11 @@ hdfs dfs -mv <src> ... <dst>
 ```bash
 hdfs dfs -rm [-r] [-skipTrash] URI [URI ...]
 ```
+
+## 其他命令
+
+1. 查看副本数量
+
+    ```bash
+    hdfs fsck <path> -files -blocks -locations
+    ```

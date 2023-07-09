@@ -80,7 +80,7 @@ sidebar_label: 补充配置
 
 5. 分发到其他节点
     ```bash
-    xsync /bigdata/server/hadoop-3.3.6
+    xsync /bigdata/server/hadoop-3.3.6/etc/hadoop
     ```
 
 
