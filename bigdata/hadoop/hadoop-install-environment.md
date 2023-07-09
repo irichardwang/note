@@ -161,6 +161,7 @@ systemctl enable chronyd
 6. 配置 JAVA 执行程序的软链接
     ```bash
     ln -s /bigdata/server/jdk/bin/java /usr/bin/java
+    ln -s /bigdata/server/jdk/bin/jps /usr/bin/jps
     ```
 
 ### 11. 配置 hadoop 用户 sudo 权限
