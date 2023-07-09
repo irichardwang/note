@@ -166,6 +166,30 @@ start-dfs.sh
 ### 7. 查看进程
 
 ```bash
-jps
+jpsall
+```
+
+### 8. 访问 HDFS
+
+1. 访问 NameNode
+    ```bash
+    http://node01:9870
+    ```
+
+2. 访问 DataNode
+    ```bash
+    http://node02:9864
+    http://node03:9864
+    ```
+
+3. 访问 SecondaryNameNode
+    ```bash
+    http://node03:9868
+    ```
+
+### 9. 停止 HDFS
+    
+```bash
+stop-dfs.sh
 ```
 

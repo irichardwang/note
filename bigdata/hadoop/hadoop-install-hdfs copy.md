@@ -1,0 +1,70 @@
+---
+title: Hadoop安装部署--HDFS命令
+sidebar_position: 4
+sidebar_label: HDFS命令
+---
+
+## HDFS集群启停命令
+
+### 1. 集群启停命令
+
+1. 启动
+    ```bash
+    start-dfs.sh
+    ```
+2. 停止
+    ```bash
+    stop-dfs.sh
+    ```
+
+### 2. 单独进程启停命令
+
+1. `hadoop-daemon.sh` 脚本，用于单独控制所在节点的某个进程
+
+    ```bash
+    hadoop-daemon.sh <start|stop|restart|status> <namenode|datanode|secondarynamenode>
+    ```
+
+2. `hdfs` 命令，用于单独控制所在节点的某个进程
+    ```bash
+    hdfs --daemon <start|stop|restart|status> <namenode|datanode|secondarynamenode>
+    ```
+
+## HDFS文件系统操作命令
+
+### 1. 创建目录
+
+```bash
+hdfs dfs -mkdir [-p] <path>
+```
+
+### 2. 查看目录
+
+```bash
+hdfs dfs -ls [-h] [-R] <path>
+```
+
+### 3. 上传文件
+
+```bash
+hdfs dfs -put [-f] [-p] <localsrc> ... <dst>
+```
+
+### 4. 查看文件
+
+```bash
+hdfs dfs -cat <path>
+```
+
+读取大文件时，可以使用管道符配合 more 命令分页查看
+
+```bash
+hdfs dfs -cat <path> | more
+```
+
+### 5. 下载文件
+
+```bash
+hdfs dfs -get [-f] [-p] <src> ... <localdst>
+```
+    
