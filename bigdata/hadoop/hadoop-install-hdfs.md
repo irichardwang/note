@@ -146,3 +146,26 @@ source /etc/profile
 ```bash
 chown -R hadoop:hadoop /bigdata
 ```
+
+### 5. 格式化 NameNode
+
+```bash
+su - hadoop
+```
+
+```bash
+hadoop namenode -format
+```
+
+### 6. 启动 HDFS
+
+```bash
+start-dfs.sh
+```
+
+### 7. 查看进程
+
+```bash
+jps
+```
+

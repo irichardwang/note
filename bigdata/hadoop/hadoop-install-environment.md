@@ -250,3 +250,23 @@ hadoop ALL=(ALL) NOPASSWD: ALL
     ```bash
     chmod +x /root/bin/xsync
     ```
+
+### 小工具：查看集群jps进程脚本
+
+```
+mkdir -p /home/hadoop/bin
+vim /home/hadoop/bin/jpsall
+```
+
+```bash
+#！/bin/bash
+for i in node01 node02 node03
+do
+    echo "===================$i==================="
+    ssh $i /bigdata/server/jdk/bin/jps
+done
+```
+
+```bash
+chmod +x /home/hadoop/bin/jpsall
+```
