@@ -187,7 +187,7 @@ systemctl enable chronyd
 
 4. 配置环境变量
     ```bash
-    vim /etc/profile
+    vim /etc/profile.d/bigdata.sh
     ```
 
     ```bash
