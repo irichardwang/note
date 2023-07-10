@@ -1,7 +1,7 @@
 ---
-title: Hadoop安装部署--安装HDFS
+title: Hadoop安装部署--HDFS集群部署
 sidebar_position: 3
-sidebar_label: 安装HDFS
+sidebar_label: HDFS集群部署
 ---
 
 ### 节点规划
@@ -17,22 +17,22 @@ sidebar_label: 安装HDFS
 
 1. 下载 Hadoop 程序包
     ```bash
-    wget https://dlcdn.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
+    wget https://dlcdn.apache.org/hadoop/common/hadoop-3.3.4/hadoop-3.3.4.tar.gz
     ```
 
 2. 解压
     ```bash
-    tar -zxvf hadoop-3.3.6.tar.gz -C /bigdata/server
+    tar -zxvf hadoop-3.3.4.tar.gz -C /bigdata/server
     ```
 
 3. 分发到其他节点
     ```bash
-    xsync /bigdata/server/hadoop-3.3.6
+    xsync /bigdata/server/hadoop-3.3.4
     ```
 
 4. 创建软链接
     ```bash
-    ln -s /bigdata/server/hadoop-3.3.6 /bigdata/server/hadoop
+    ln -s /bigdata/server/hadoop-3.3.4 /bigdata/server/hadoop
     ```
 
 ### 2. 修改配置文件
@@ -91,11 +91,11 @@ sidebar_label: 安装HDFS
         </property>
         <property>
             <name>dfs.namenode.name.dir</name>
-            <value>/bigdata/server/hadoop/data/nameNode</value>
+            <value>/data/nameNode</value>
         </property>
         <property>
             <name>dfs.datanode.data.dir</name>
-            <value>/bigdata/server/hadoop/data/dataNode</value>
+            <value>/data/dataNode</value>
         </property>
         <property>
             <name>dfs.namenode.hosts</name>
@@ -109,21 +109,33 @@ sidebar_label: 安装HDFS
             <name>dfs.blocksize</name>
             <value>268435456</value>
         </property>
+        <property>
+            <name>dfs.namenode.http-address</name>
+            <value>node01:9870</value>
+        </property>
+        <property>
+            <name>dfs.namenode.secondary.http-address</name>
+            <value>node03:9868</value>
+        </property>
+        <property>
+            <name>dfs.replication</name>
+            <value>3</value>
+        </property>
     </configuration>
     ```
 
 5. 创建目录
     ```bash
     # 在 NameNode 节点上执行，本例中为 node01
-    mkdir -p /bigdata/server/hadoop/data/nameNode
+    mkdir -p /data/nameNode
 
     # 在 DataNode 节点上执行，本例中为 node01、node02、node03
-    mkdir -p /bigdata/server/hadoop/data/dataNode
+    mkdir -p /data/dataNode
     ```
 
 6. 分发到其他节点
     ```bash
-    xsync /bigdata/server/hadoop-3.3.6
+    xsync /bigdata/server/hadoop-3.3.4/etc/hadoop
     ```
 
 ### 3. 配置环境变量
@@ -145,6 +157,7 @@ source /etc/profile
 
 ```bash
 chown -R hadoop:hadoop /bigdata
+chown -R hadoop:hadoop /data
 ```
 
 ### 5. 格式化 NameNode

@@ -132,16 +132,16 @@ systemctl enable chronyd
     mkdir -p /bigdata/package # 用于存放安装包
     ```
 
-2. 上传 `jdk-8u371-linux-x64.tar.gz` 到 `/bigdata/package` 目录
+2. 上传 `jdk-8u361-linux-x64.tar.gz` 到 `/bigdata/package` 目录
 
 3. 解压
     ```bash
-    tar -zxvf jdk-8u371-linux-x64.tar.gz -C /bigdata/server
+    tar -zxvf jdk-8u361-linux-x64.tar.gz -C /bigdata/server
     ```
 
 4. 创建软链接
     ```bash
-    ln -s /bigdata/server/jdk1.8.0_371 /bigdata/server/jdk
+    ln -s /bigdata/server/jdk1.8.0_361 /bigdata/server/jdk
     ```
 
 5. 配置环境变量
@@ -208,7 +208,7 @@ hadoop ALL=(ALL) NOPASSWD: ALL
 
 2. 创建脚本
     ```bash
-    vim /root/bin/xsync
+    vim /usr/bin/xsync
     ```
 
     ```bash
@@ -249,14 +249,13 @@ hadoop ALL=(ALL) NOPASSWD: ALL
 
 3. 赋予执行权限
     ```bash
-    chmod +x /root/bin/xsync
+    chmod +x /usr/bin/xsync
     ```
 
 ### 小工具：查看集群jps进程脚本
 
 ```
-mkdir -p /home/hadoop/bin
-vim /home/hadoop/bin/jpsall
+vim /usr/bin/jpsall
 ```
 
 ```bash
@@ -269,5 +268,5 @@ done
 ```
 
 ```bash
-chmod +x /home/hadoop/bin/jpsall
+chmod +x /usr/bin/jpsall
 ```

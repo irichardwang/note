@@ -7,28 +7,6 @@ sidebar_label: 补充配置
 
 ### 1. 配置文件补充
 
-1. 配置 workers
-    ```bash
-    vim /bigdata/server/hadoop/etc/hadoop/workers
-    ```
-
-    ```bash
-    node01
-    node02
-    node03
-    ```
-
-2. 配置 hadoop-env.sh
-    ```bash
-    vim /bigdata/server/hadoop/etc/hadoop/hadoop-env.sh
-    ```
-
-    ```bash
-    export JAVA_HOME=/bigdata/server/jdk
-    export HADOOP_HOME=/bigdata/server/hadoop
-    export HADOOP_CONF_DIR=${HADOOP_HOME}/etc/hadoop
-    export HADOOP_LOG_DIR=${HADOOP_HOME}/logs
-    ```
 
 3. 配置 core-site.xml
     ```bash
@@ -85,3 +63,60 @@ sidebar_label: 补充配置
 
 
 
+### 一键 Hadoop 集群启停脚本
+
+1. 创建脚本
+
+```bash
+vim /home/hadoop/bin/hdp.sh
+```
+
+2. 脚本内容
+
+```bash
+#!/bin/bash
+if [ $# -lt 1 ]
+then
+    echo "No Args Input..."
+    exit;
+fi
+
+case $1 in
+"start")
+    echo "========== 启动 Hadoop 集群 =========="
+
+    echo "========== 启动 HDFS =========="
+    ssh node01 "/bigdata/server/hadoop/sbin/start-dfs.sh"
+    echo "========== 启动 YARN =========="
+    ssh node01 "/bigdata/server/hadoop/sbin/start-yarn.sh"
+    echo "========== 启动 HistoryServer =========="
+    ssh node01 "/bigdata/server/hadoop/bin/mapred --daemon start historyserver"
+;;
+"stop")
+    echo "========== 停止 Hadoop 集群 =========="
+
+    echo "========== 停止 HistoryServer =========="
+    ssh node01 "/bigdata/server/hadoop/bin/mapred --daemon stop historyserver"
+    echo "========== 停止 YARN =========="
+    ssh node01 "/bigdata/server/hadoop/sbin/stop-yarn.sh"
+    echo "========== 停止 HDFS =========="
+    ssh node01 "/bigdata/server/hadoop/sbin/stop-dfs.sh"
+;;
+*)
+    echo "Input Args Error..."
+;;
+esac
+```
+
+3. 赋予执行权限
+
+```bash
+chmod +x /home/hadoop/bin/hdp.sh
+```
+
+4. 使用命令
+
+```bash
+hdp.sh start
+hdp.sh stop
+```
