@@ -22,24 +22,19 @@ sidebar_label: HDFS集群部署
 
 2. 解压
     ```bash
-    tar -zxvf hadoop-3.3.4.tar.gz -C /bigdata/server
+    tar -zxvf hadoop-3.3.4.tar.gz -C /opt/bigdata
     ```
 
-3. 分发到其他节点
+3. 创建软链接
     ```bash
-    xsync /bigdata/server/hadoop-3.3.4
-    ```
-
-4. 创建软链接
-    ```bash
-    ln -s /bigdata/server/hadoop-3.3.4 /bigdata/server/hadoop
+    ln -s /opt/bigdata/hadoop-3.3.4 /opt/bigdata/hadoop
     ```
 
 ### 2. 修改配置文件
 
 1. 配置 workers
     ```bash
-    vim /bigdata/server/hadoop/etc/hadoop/workers
+    vim /opt/bigdata/hadoop/etc/hadoop/workers
     ```
 
     ```bash
@@ -50,19 +45,19 @@ sidebar_label: HDFS集群部署
 
 2. 配置 hadoop-env.sh
     ```bash
-    vim /bigdata/server/hadoop/etc/hadoop/hadoop-env.sh
+    vim /opt/bigdata/hadoop/etc/hadoop/hadoop-env.sh
     ```
 
     ```bash
-    export JAVA_HOME=/bigdata/server/jdk
-    export HADOOP_HOME=/bigdata/server/hadoop
+    export JAVA_HOME=/opt/bigdata/jdk
+    export HADOOP_HOME=/opt/bigdata/hadoop
     export HADOOP_CONF_DIR=${HADOOP_HOME}/etc/hadoop
     export HADOOP_LOG_DIR=${HADOOP_HOME}/logs
     ```
 
 3. 配置 core-site.xml
     ```bash
-    vim /bigdata/server/hadoop/etc/hadoop/core-site.xml
+    vim /opt/bigdata/hadoop/etc/hadoop/core-site.xml
     ```
 
     ```xml
@@ -80,7 +75,7 @@ sidebar_label: HDFS集群部署
 
 4. 配置 hdfs-site.xml
     ```bash
-    vim /bigdata/server/hadoop/etc/hadoop/hdfs-site.xml
+    vim /opt/bigdata/hadoop/etc/hadoop/hdfs-site.xml
     ```
 
     ```xml
@@ -135,17 +130,17 @@ sidebar_label: HDFS集群部署
 
 6. 分发到其他节点
     ```bash
-    xsync /bigdata/server/hadoop-3.3.4/etc/hadoop
+    xsync /opt/bigdata/hadoop-3.3.4/etc/hadoop
     ```
 
 ### 3. 配置环境变量
 
 ```bash
-vim /etc/profile
+vim /etc/profile.d/bigdata.sh
 ```
 
 ```bash
-export HADOOP_HOME=/bigdata/server/hadoop
+export HADOOP_HOME=/opt/bigdata/hadoop
 export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 ```
 
@@ -156,7 +151,6 @@ source /etc/profile
 ### 4. 授权 hadop 用户
 
 ```bash
-chown -R hadoop:hadoop /bigdata
 chown -R hadoop:hadoop /data
 ```
 
