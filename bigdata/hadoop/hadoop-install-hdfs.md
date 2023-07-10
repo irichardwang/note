@@ -8,9 +8,9 @@ sidebar_label: HDFS集群部署
 
 | 主机名 | 角色 |
 | --- | --- |
-| node01 |  NameNode、DataNode |
-| node02 |  DataNode |
-| node03 |  DataNode、SecondaryNameNode |
+| hadoop01 |  NameNode、DataNode |
+| hadoop02 |  DataNode |
+| hadoop03 |  DataNode、SecondaryNameNode |
 
 
 ### 1. 准备程序文件
@@ -38,9 +38,9 @@ sidebar_label: HDFS集群部署
     ```
 
     ```bash
-    node01
-    node02
-    node03
+    hadoop01
+    hadoop02
+    hadoop03
     ```
 
 2. 配置 hadoop-env.sh
@@ -61,16 +61,10 @@ sidebar_label: HDFS集群部署
     ```
 
     ```xml
-    <configuration>
         <property>
             <name>fs.defaultFS</name>
-            <value>hdfs://node01:8020</value>
+            <value>hdfs://hadoop01:8020</value>
         </property>
-        <property>
-            <name>io.file.buffer.size</name>
-            <value>131072</value>
-        </property>
-    <configuration>
     ```
 
 4. 配置 hdfs-site.xml
@@ -79,52 +73,34 @@ sidebar_label: HDFS集群部署
     ```
 
     ```xml
-    <configuration>
-        <property>
-            <name>dfs.namenode.data.dir.perm</name>
-            <value>700</value>
-        </property>
-        <property>
-            <name>dfs.namenode.name.dir</name>
-            <value>/data/nameNode</value>
-        </property>
-        <property>
-            <name>dfs.datanode.data.dir</name>
-            <value>/data/dataNode</value>
-        </property>
-        <property>
-            <name>dfs.namenode.hosts</name>
-            <value>node01, node02, node03</value>
-        </property>
-        <property>
-            <name>dfs.namenode.handler.count</name>
-            <value>100</value>
-        </property>
-        <property>
-            <name>dfs.blocksize</name>
-            <value>268435456</value>
-        </property>
+        <!-- namenode地址 -->
         <property>
             <name>dfs.namenode.http-address</name>
-            <value>node01:9870</value>
+            <value>hadoop01:9870</value>
         </property>
+        <!-- secondarynamenode地址 -->
         <property>
             <name>dfs.namenode.secondary.http-address</name>
-            <value>node03:9868</value>
+            <value>hadoop03:9868</value>
         </property>
+        <!-- 副本数量 -->
         <property>
             <name>dfs.replication</name>
-            <value>3</value>
+            <value>1</value>
         </property>
-    </configuration>
+        <!-- 指定哪些节点作为 NameNode -->
+        <property>
+            <name>dfs.namenode.hosts</name>
+            <value>hadoop01, hadoop02, hadoop03</value>
+        </property>
     ```
 
 5. 创建目录
     ```bash
-    # 在 NameNode 节点上执行，本例中为 node01
+    # 在 NameNode 节点上执行，本例中为 hadoop01
     mkdir -p /data/nameNode
 
-    # 在 DataNode 节点上执行，本例中为 node01、node02、node03
+    # 在 DataNode 节点上执行，本例中为 hadoop01、hadoop02、hadoop03
     mkdir -p /data/dataNode
     ```
 
@@ -161,7 +137,7 @@ su - hadoop
 ```
 
 ```bash
-hadoop namenode -format
+hdfs namenode -format
 ```
 
 ### 6. 启动 HDFS
@@ -180,18 +156,18 @@ jpsall
 
 1. 访问 NameNode
     ```bash
-    http://node01:9870
+    http://hadoop01:9870
     ```
 
 2. 访问 DataNode
     ```bash
-    http://node02:9864
-    http://node03:9864
+    http://hadoop02:9864
+    http://hadoop03:9864
     ```
 
 3. 访问 SecondaryNameNode
     ```bash
-    http://node03:9868
+    http://hadoop03:9868
     ```
 
 ### 9. 停止 HDFS
