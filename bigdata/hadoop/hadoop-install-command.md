@@ -1,7 +1,7 @@
 ---
-title: Hadoop安装部署--HDFS命令
+title: Hadoop安装部署--常用命令
 sidebar_position: 4
-sidebar_label: HDFS命令
+sidebar_label: 常用命令
 ---
 
 ## HDFS集群启停命令

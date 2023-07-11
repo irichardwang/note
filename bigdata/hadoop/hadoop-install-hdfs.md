@@ -119,7 +119,7 @@ vim /opt/bigdata/hadoop/etc/hadoop/hdfs-site.xml
 xsync /opt/bigdata/hadoop-3.3.4
 ```
 
-### 7. HDFS 启动
+### 7. HDFS 集群启动
 
 1. 格式化 NameNode
 
