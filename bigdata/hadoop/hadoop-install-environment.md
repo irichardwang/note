@@ -71,7 +71,7 @@ vim /etc/hosts
     ssh-copy-id hadoop03
     ```
 
-### 2.3 创建 `hadoop` 用户
+### 2.3 创建 hadoop 用户
 
 :::tip
 hadoop 用户可以在安装虚拟机过程中创建。若在安装时创建，则可跳过此步骤。
