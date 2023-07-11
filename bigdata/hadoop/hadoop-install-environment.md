@@ -5,21 +5,22 @@ sidebar_label: 环境准备
 ---
 
 :::info
-环境准备工作需要在所有节点上执行。
-
 学习中以三台虚拟机为例，主机名分别为 hadoop01、hadoop02、hadoop03。系统为 Rocky Linux 8.8。
 :::
 
-### 1. 修改主机名
+## 虚拟机创建
 
-若多台虚拟机使用克隆的方式创建，需要修改主机名，避免冲突。
+:::tip
+若多台虚拟机使用克隆的方式创建，需要按如下步骤分别修改主机名和静态ip地址，避免冲突。若各个虚拟机采用独立安装，则可在安装时直接配置好主机名和静态ip地址。
+:::
+
+### 1.1 修改主机名
 
 ```bash
-hostnamectl set-hostname hadoop01
-# ...
+hostnamectl set-hostname hadoop01 # hadoop02、hadoop03
 ```
 
-### 2. 修改静态 ip 地址
+### 1.2 修改静态 ip 地址
 
 ```bash
 vim /etc/sysconfig/network-scripts/ifcfg-ens33
@@ -29,14 +30,20 @@ vim /etc/sysconfig/network-scripts/ifcfg-ens33
 ...
 BOOTPROTO=static
 ...
-IPADDR="192.168.1.2"
-NETMASK="255.255.255.0"
-GATEWAY="192.168.1.1"
-DNS1="192.168.1.1"
+IPADDR="192.168.1.2"    # 每台虚拟机的 ip 地址不同
+NETMASK="255.255.255.0" # 子网掩码，一般不用修改
+GATEWAY="192.168.1.1"   # 网关地址
+DNS1="192.168.1.1"      # DNS地址，可与网关地址相同
 ```
 
 
-### 3. 配置 hosts 主机名映射
+## 用户配置
+
+:::caution
+用户配置可以通过 xshell `发送键入到所有会话窗口` 的功能，同时在三台主机上执行，可以简化 ssh 免密登录的重复操作。否则需要在每台主机上分别执行。
+:::
+
+### 2.1 配置 hosts 主机名映射
 
 ```bash
 vim /etc/hosts
@@ -48,7 +55,7 @@ vim /etc/hosts
 192.168.100.63 hadoop03
 ```
 
-### 4. 配置 root 用户 ssh 免密登录
+### 2.2 配置 root 用户 ssh 免密登录
 
 1. 生成密钥对
 
@@ -64,26 +71,32 @@ vim /etc/hosts
     ssh-copy-id hadoop03
     ```
 
-### 5. 创建 hadoop 用户
+### 2.3 创建 `hadoop` 用户
+
+:::tip
+hadoop 用户可以在安装虚拟机过程中创建。若在安装时创建，则可跳过此步骤。
+:::
 
 ```bash
 useradd hadoop
 passwd hadoop
 ```
 
-### 6. 配置 hadoop 用户 sudo 权限
+### 2.4 配置 hadoop 用户 sudo 权限
 
 ```bash
 vim /etc/sudoers
 ```
 
+:::caution
+以下配置需要在 %wheel ALL=(ALL) ALL 之后添加，否则无效。因为所有用户都在 %wheel 组中，若在 %wheel 之前添加，则会被之后的 %wheel 这一行配置覆盖。
+:::
+
 ```bash
-...
 hadoop ALL=(ALL) NOPASSWD: ALL
-...
 ```
 
-### 7. 配置 hadoop 用户 ssh 免密登录
+### 2.5 配置 hadoop 用户 ssh 免密登录
 
 1. 切换到 hadoop 用户
     ```bash
@@ -102,14 +115,16 @@ hadoop ALL=(ALL) NOPASSWD: ALL
     ssh-copy-id hadoop03
     ```
 
-### 6. 关闭防火墙
+## 系统配置
+
+### 3.1 关闭防火墙
 
 ```bash
 systemctl stop firewalld
 systemctl disable firewalld.service
 ```
 
-### 7. 关闭 SELinux
+### 3.2 关闭 SELinux
 
 ```bash
 vim /etc/selinux/config
@@ -121,7 +136,7 @@ SELINUX=disabled
 ...
 ```
 
-### 8. 永久关闭 swap
+### 3.3 永久关闭 swap
 
 ```bash
 swapoff -a
@@ -135,9 +150,9 @@ vim /etc/fstab
 ...
 ```
 
-### 9. 配置时间同步
+### 3.4 配置时间同步
 
-:::tip
+:::info
 Rocky Linux 9.2 默认使用 chrony 作为时间同步服务。而 CentOS 7/8 默认使用 ntpd 作为时间同步服务。
 :::
 
@@ -157,7 +172,9 @@ systemctl start chronyd
 systemctl enable chronyd
 ```
 
-### 10. 创建目录
+## 安装 JDK
+
+### 4.1 创建目录
 
 1. 创建目录
     ```bash
@@ -165,13 +182,13 @@ systemctl enable chronyd
     mkdir -p /opt/software # 用于存放安装包
     ```
 
-2. 授权 hadoop 用户
+2. 授权给 hadoop 用户
     ```bash
     chown -R hadoop:hadoop /opt/bigdata
     chown -R hadoop:hadoop /opt/software
     ```
 
-### 11. 安装 JDK
+### 4.2 安装 JDK
 
 1. 上传 `jdk-8u212-linux-x64.tar.gz` 到 `/bigdata/software` 目录
 
@@ -195,87 +212,18 @@ systemctl enable chronyd
     export PATH=$PATH:$JAVA_HOME/bin
     ```
 
+5. 使环境变量生效
+
+    :::tip
+    通过 `source` 命令使环境变量生效，不需要重启系统，但是只对当前 shell 会话生效，若同时打开多个 shell 会话，则需要在每个 shell 会话中执行此命令，或者重启系统。
+    :::
+
     ```bash
     source /etc/profile.d/bigdata.sh
     ```
 
-5. 配置 JAVA 执行程序的软链接
+6. 配置 JAVA 执行程序的软链接（可选）
     ```bash
     ln -s /opt/bigdata/jdk/bin/java /usr/bin/java
     ln -s /opt/bigdata/jdk/bin/jps /usr/bin/jps
     ```
-
----
-
-### 小工具：集群分发脚本
-
-1. 确认是否安装 rsync
-
-    ```bash
-    dnf install rsync
-    ```
-
-2. 创建脚本
-    ```bash
-    vim /usr/bin/xsync
-    ```
-
-    ```bash
-    #!/bin/bash 
-    
-    # 1. 判断参数个数 
-    if [ $# -lt 1 ] 
-    then 
-        echo Not Enough Arguement! 
-        exit; 
-    fi
-
-    # 2. 遍历集群所有机器
-    # 替换集群中全部主机名
-    for host in hadoop01 hadoop02 hadoop03 
-    do 
-        echo ====================  $host  ==================== 
-        #3. 遍历所有目录，挨个发送 
-    
-        for file in $@ 
-        do 
-            #4. 判断文件是否存在 
-            if [ -e $file ] 
-                then 
-                    #5. 获取父目录 
-                    pdir=$(cd -P $(dirname $file); pwd) 
-    
-                    #6. 获取当前文件的名称 
-                    fname=$(basename $file) 
-                    ssh $host "mkdir -p $pdir" 
-                    rsync -av $pdir/$fname $host:$pdir 
-                else 
-                    echo $file does not exists! 
-            fi 
-        done 
-    done
-    ```
-
-3. 赋予执行权限
-    ```bash
-    chmod +x /usr/bin/xsync
-    ```
-
-### 小工具：查看集群jps进程脚本
-
-```
-vim /usr/bin/jpsall
-```
-
-```bash
-#！/bin/bash
-for i in hadoop01 hadoop02 hadoop03
-do
-    echo "===================$i==================="
-    ssh $i /opt/bigdata/jdk/bin/jps
-done
-```
-
-```bash
-chmod +x /usr/bin/jpsall
-```
