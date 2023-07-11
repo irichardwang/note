@@ -1,14 +1,13 @@
 ---
-sidebar_label: 基础环境配置
+sidebar_label: 替换软件源
 sidebar_position: 2
-title: 基础环境配置
+title: 替换软件源
 ---
-
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-## 替换国内软件源
+## 替换 `yum` 软件源
 
 1. 更换软件源
     <Tabs>
@@ -48,3 +47,4 @@ import TabItem from '@theme/TabItem';
     dnf makecache
     ```
 
+## 替换 `EPEL` 软件源
