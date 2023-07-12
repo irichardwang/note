@@ -136,7 +136,7 @@ case $1 in
     echo "========== 启动 HDFS =========="
     ssh hadoop01 "/opt/bigdata/hadoop/sbin/start-dfs.sh"
     echo "========== 启动 YARN =========="
-    ssh hadoop01 "/opt/bigdata/hadoop/sbin/start-yarn.sh"
+    ssh hadoop02 "/opt/bigdata/hadoop/sbin/start-yarn.sh"
     echo "========== 启动 HistoryServer =========="
     ssh hadoop01 "/opt/bigdata/hadoop/bin/mapred --daemon start historyserver"
 ;;
@@ -146,7 +146,7 @@ case $1 in
     echo "========== 停止 HistoryServer =========="
     ssh hadoop01 "/opt/bigdata/hadoop/bin/mapred --daemon stop historyserver"
     echo "========== 停止 YARN =========="
-    ssh hadoop01 "/opt/bigdata/hadoop/sbin/stop-yarn.sh"
+    ssh hadoop02 "/opt/bigdata/hadoop/sbin/stop-yarn.sh"
     echo "========== 停止 HDFS =========="
     ssh hadoop01 "/opt/bigdata/hadoop/sbin/stop-dfs.sh"
 ;;
