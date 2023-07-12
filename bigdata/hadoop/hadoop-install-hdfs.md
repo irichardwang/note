@@ -48,7 +48,7 @@ export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 ```
 
 ```bash
-source /etc/profile
+source /etc/profile.d/bigdata.sh
 ```
 
 ### 3. 配置 workers
