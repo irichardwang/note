@@ -2,7 +2,6 @@
 sidebar_position: 1
 sidebar_label: Proxmox
 title: Proxmox虚拟化环境
-slug: /
 ---
 
 :::note

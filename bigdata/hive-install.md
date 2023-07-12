@@ -173,6 +173,4 @@ mysql -uroot -p
 use hive;
 alter table COLUMNS_V2 modify column COMMENT varchar(256) character set utf8;
 alter table COLUMNS_V2 modify column PARAM_VALUE mediumtext character set utf8;
-
-
-
+```
