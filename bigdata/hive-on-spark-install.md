@@ -120,3 +120,9 @@ vim /opt/bigdata/hadoop/etc/hadoop/capacity-scheduler.xml
         <value>0.5</value>
     </property>
 ```
+
+### 9. 启动 Hive Server2
+
+```bash
+hive --service hiveserver2
+```
