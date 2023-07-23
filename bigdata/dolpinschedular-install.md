@@ -33,6 +33,31 @@ sidebar_label: 部署 DolphinScheduler
     chown -R dolphinscheduler:dolphinscheduler /opt
     ```
 
+### 配置SSH免密登陆
+
+1. 切换到 dolphinscheduler 用户
+
+    ```bash
+    su dolphinscheduler
+    ```
+2. 生成密钥
+
+    ```bash
+    ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+    ```
+
+3. 将公钥添加到 authorized_keys
+
+    ```bash
+    cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+    ```
+
+4. 修改 authorized_keys 权限
+
+    ```bash
+    chmod 600 ~/.ssh/authorized_keys
+    ```
+
 ### 创建目录
 
 ```bash
@@ -43,12 +68,10 @@ mkdir -p /opt/zkdata # 用于存放 zookeeper 数据
 
 ### 安装 JDK
 
-1. 下载 JDK 并解压到 `/opt/bigdata` 目录下
+1. 上传 JDK 到 `/opt/software` 目录下
 
-    ```bash
-    wget https://download.oracle.com/otn/java/jdk/8u381-b09/8c876547113c4e4aab3c868e9e0ec572/jdk-8u381-linux-x64.tar.gz -O /opt/software/jdk-8u381-linux-x64.tar.gz
-    ```
-    
+2. 解压到 `/opt/bigdata` 目录下
+
     ```bash
     tar -zxvf /opt/software/jdk-8u381-linux-x64.tar.gz -C /opt/bigdata
     ```
@@ -182,23 +205,111 @@ mkdir -p /opt/zkdata # 用于存放 zookeeper 数据
 2. 修改 dolphinscheduler_env.sh 配置文件
 
     ```bash
-    vim /opt/bigdata/apache-dolphinscheduler-3.1.7-bin/bin/env/dolphinscheduler_env.sh
+    vim /opt/software/apache-dolphinscheduler-3.1.7-bin/bin/env/dolphinscheduler_env.sh
     ```
 
     ```bash
+    export JAVA_HOME=${JAVA_HOME:-/opt/bigdata/jdk}
+    ...
     export DATABASE=${DATABASE:-mysql}
     export SPRING_PROFILES_ACTIVE=${DATABASE}
-    export SPRING_DATASOURCE_URL="jdbc:mysql://127.0.0.1:3306/dolphinscheduler?useUnicode=true&characterEncoding=UTF-8&useSSL=false"
+    export SPRING_DATASOURCE_URL="jdbc:mysql://127.0.0.1:3306/dolphinscheduler?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true"
     export SPRING_DATASOURCE_USERNAME={user}
     export SPRING_DATASOURCE_PASSWORD={password}
     ```
 
+    :::caution
+    在 SPRING_DATASOURCE_URL 中，需要补充  `&allowPublicKeyRetrieval=true`，否则初始化过程会报错，这一点在官方模板中没有写到。
+    :::
+
 3. 初始化数据库
 
     ```bash
-    bash /opt/bigdata/apache-dolphinscheduler-3.1.7-bin/tools/bin/upgrade-schema.sh
+    bash /opt/software/apache-dolphinscheduler-3.1.7-bin/tools/bin/upgrade-schema.sh
     ```
 
 ### 部署 DolphinScheduler
 
-1. 
+1. 修改 install_env.sh 配置文件
+
+    ```bash
+    vim /opt/software/apache-dolphinscheduler-3.1.7-bin/bin/env/install_env.sh
+    ```
+
+    ```bash
+    ips="localhost"
+    sshPort="22"
+    masters="localhost"
+    workers="localhost:default"
+    alertServer="localhost"
+    apiServers="localhost"
+    installPath="/opt/bigdata/dolphinscheduler"
+    deployUser="dolphinscheduler" # 这里填写之前创建的用户
+    ```
+
+2. 修改 dolphinscheduler_env.sh 配置文件
+
+    :::info
+    如后续调度任务中使用到以下组件，则需要在此处配置对应的环境变量。
+    :::
+
+    ```bash
+    export HADOOP_HOME=${HADOOP_HOME:-/opt/soft/hadoop}
+    export HADOOP_CONF_DIR=${HADOOP_CONF_DIR:-/opt/soft/hadoop/etc/hadoop}
+    export SPARK_HOME1=${SPARK_HOME1:-/opt/soft/spark1}
+    export SPARK_HOME2=${SPARK_HOME2:-/opt/soft/spark2}
+    export PYTHON_HOME=${PYTHON_HOME:-/opt/soft/python}
+    export HIVE_HOME=${HIVE_HOME:-/opt/soft/hive}
+    export FLINK_HOME=${FLINK_HOME:-/opt/soft/flink}
+    export DATAX_HOME=${DATAX_HOME:-/opt/soft/datax}
+
+    export PATH=$HADOOP_HOME/bin:$SPARK_HOME1/bin:$SPARK_HOME2/bin:$PYTHON_HOME/bin:$JAVA_HOME/bin:$HIVE_HOME/bin:$FLINK_HOME/bin:$DATAX_HOME/bin:$PATH
+    ```
+
+3. 一键部署
+
+    首先确保当前用户为 dolphinscheduler 用户，且 zookeeper 已启动。
+
+    ```bash
+    bash /opt/software/apache-dolphinscheduler-3.1.7-bin/bin/install.sh
+    ```
+
+4. 启停命令
+
+    ```bash
+    # 停止全部
+    bash /opt/software/apache-dolphinscheduler-3.1.7-bin/bin/stop-all.sh
+
+    # 启动全部
+    bash /opt/software/apache-dolphinscheduler-3.1.7-bin/bin/start-all.sh
+    ```
+
+5. 开放 12345 端口或关闭防火墙
+
+    - 开放 12345 端口
+
+        ```bash
+        sudo firewall-cmd --zone=public --add-port=12345/tcp --permanent
+        sudo firewall-cmd --reload
+        ```
+
+    - 关闭防火墙
+
+        ```bash
+        sudo systemctl stop firewalld.service
+        sudo systemctl disable firewalld.service
+        ```
+
+6. Web UI 访问
+
+    访问地址：http://localhost:12345/dolphinscheduler/ui
+    
+    :::note
+    默认的用户名和密码为：admin / dolphinscheduler123
+    :::
+
+    :::caution
+    访问地址中的 `/dolphinscheduler/ui` 不能省略，否则无法进入登录页面。
+    :::
+
+    ![Alt text](CleanShot_2023-07-23_at_14.34.04@2x.png)
