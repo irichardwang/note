@@ -123,10 +123,10 @@ PROPERTIES (
 );
 ```
 
-### imdb.name_basics
+### movie.stg_imdb_name_basics
 
 ```sql
-CREATE TABLE IF NOT EXISTS movie.name_basics
+CREATE TABLE IF NOT EXISTS movie.stg_imdb_name_basics
 (
     `nconst`            VARCHAR(100) NOT NULL COMMENT 'The alphanumeric identifier of the name/person.',
     `primaryName`       VARCHAR(255) COMMENT 'The name by which the person is most often credited.',

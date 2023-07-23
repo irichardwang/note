@@ -32,7 +32,7 @@ gunzip -f /opt/data/imdb/title.ratings.tsv.gz
 
 ```sql
 DELETE
-FROM movie.title_ratings
+FROM movie.stg_imdb_title_ratings
 WHERE tconst IS NOT NULL;
 ```
 
@@ -43,7 +43,7 @@ WHERE tconst IS NOT NULL;
 :::
 
 ```bash
-curl --location-trusted -u homelab:cRiwVxEv66jcce8v -H "format:csv_with_names" -T /opt/data/imdb/title.ratings.tsv http://192.168.100.60:8030/api/imdb/title_ratings/_stream_load
+curl --location-trusted -u homelab:cRiwVxEv66jcce8v -H "format:csv_with_names" -T /opt/data/imdb/title.ratings.tsv http://192.168.100.60:8030/api/movie/stg_imdb_title_ratings/_stream_load
 ```
 
 :::caution
