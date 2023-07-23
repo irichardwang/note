@@ -15,7 +15,6 @@ sidebar_label: 定时同步
 :::
 
 ```bash
-wget -c -O /opt/data/imdb/title.basics.tsv.gz https://datasets.imdbws.com/title.basics.tsv.gz
 wget -c -O /opt/data/imdb/title.ratings.tsv.gz https://datasets.imdbws.com/title.ratings.tsv.gz
 ```
 
@@ -26,7 +25,6 @@ wget -c -O /opt/data/imdb/title.ratings.tsv.gz https://datasets.imdbws.com/title
 :::
 
 ```bash
-gunzip -f /opt/data/imdb/title.basics.tsv.gz
 gunzip -f /opt/data/imdb/title.ratings.tsv.gz
 ```
 
@@ -40,6 +38,15 @@ WHERE tconst IS NOT NULL;
 
 ### 4. shell 任务：数据导入
 
-:::info
+:::note
 数据导入通过 Doris 的 streaming_load 功能实现。也可以使用 DataX，但查阅了 DataX 的官方文档，其原理同样是通过 streaming_load 实现，所以直接使用脚本更为直接。
+:::
+
+```bash
+curl --location-trusted -u homelab:cRiwVxEv66jcce8v -H "format:csv_with_names" -T /opt/data/imdb/title.ratings.tsv http://192.168.100.60:8030/api/imdb/title_ratings/_stream_load
+```
+
+:::caution
+1. 导入表的字段数量与顺序，必须与被导入 csv 文件的字段数量与顺序一致。
+2. 被导入文件的首行默认会作为数据而非字段名，需要指定文件类型为 csv_with_names，才能正确导入。
 :::
