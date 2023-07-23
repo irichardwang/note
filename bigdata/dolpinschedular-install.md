@@ -6,70 +6,6 @@ sidebar_label: 部署 DolphinScheduler
 
 ## 环境准备
 
-### 安装 JDK
-
-1. 下载 JDK 并解压到 `/opt/bigdata` 目录下
-
-    ```bash
-    wget https://download.oracle.com/otn/java/jdk/8u381-b09/8c876547113c4e4aab3c868e9e0ec572/jdk-8u381-linux-x64.tar.gz
-    tar -zxvf /opt/software/jdk-8u381-linux-x64.tar.gz -C /opt/bigdata
-    ```
-
-2. 创建软链接
-
-    ```bash
-    ln -s /opt/bigdata/jdk1.8.0_381 /opt/bigdata/jdk
-    ```
-
-3. 配置环境变量
-
-    ```bash
-    vim /etc/profile.d/bigdata.sh
-    ```
-
-    ```bash
-    export JAVA_HOME=/opt/bigdata/jdk
-    export PATH=$JAVA_HOME/bin:$PATH
-    ```
-
-### 安装 zookeeper
-
-1. 下载 zookeeper 并解压到 `/opt/bigdata` 目录下
-
-    ```bash
-    wget https://dlcdn.apache.org/zookeeper/zookeeper-3.8.2/apache-zookeeper-3.8.2-bin.tar.gz
-    tar -zxvf /opt/software/apache-zookeeper-3.8.2-bin.tar.gz -C /opt/bigdata
-    ```
-
-2. 创建软链接
-
-    ```bash
-    ln -s /opt/bigdata/apache-zookeeper-3.8.2-bin /opt/bigdata/zookeeper
-    ```
-
-3. 创建用于存储 zookeeper 数据的目录
-
-    ```bash
-    mkdir /opt/zkdata
-    ```
-
-4. 修改配置文件
-
-    ```bash
-    mv /opt/bigdata/zookeeper/conf/zoo_sample.cfg /opt/bigdata/zookeeper/conf/zoo.cfg
-    vim /opt/bigdata/zookeeper/conf/zoo.cfg
-    ```
-
-    ```bash
-    dataDir=/opt/zkdata
-    ```
-
-5. 启动 zookeeper
-
-    ```bash
-    /opt/bigdata/zookeeper/bin/zkServer.sh start
-    ```
-
 ### 配置用户及免密登录
 
 1. 创建用户
@@ -97,6 +33,83 @@ sidebar_label: 部署 DolphinScheduler
     chown -R dolphinscheduler:dolphinscheduler /opt
     ```
 
+### 创建目录
+
+```bash
+mkdir -p /opt/bigdata # 用于存放大数据组件
+mkdir -p /opt/software # 用于存放安装包
+mkdir -p /opt/zkdata # 用于存放 zookeeper 数据
+```
+
+### 安装 JDK
+
+1. 下载 JDK 并解压到 `/opt/bigdata` 目录下
+
+    ```bash
+    wget https://download.oracle.com/otn/java/jdk/8u381-b09/8c876547113c4e4aab3c868e9e0ec572/jdk-8u381-linux-x64.tar.gz -O /opt/software/jdk-8u381-linux-x64.tar.gz
+    ```
+    
+    ```bash
+    tar -zxvf /opt/software/jdk-8u381-linux-x64.tar.gz -C /opt/bigdata
+    ```
+
+2. 创建软链接
+
+    ```bash
+    ln -s /opt/bigdata/jdk1.8.0_381 /opt/bigdata/jdk
+    ```
+
+3. 配置环境变量
+
+    ```bash
+    sudo vim /etc/profile.d/bigdata.sh
+    ```
+
+    ```bash
+    export JAVA_HOME=/opt/bigdata/jdk
+    export PATH=$JAVA_HOME/bin:$PATH
+    ```
+4. 使环境变量生效
+
+    ```bash
+    source /etc/profile.d/bigdata.sh
+    ```
+
+### 安装 zookeeper
+
+1. 下载 zookeeper 并解压到 `/opt/bigdata` 目录下
+
+    ```bash
+    wget https://dlcdn.apache.org/zookeeper/zookeeper-3.8.2/apache-zookeeper-3.8.2-bin.tar.gz -O /opt/software/apache-zookeeper-3.8.2-bin.tar.gz
+    ```
+    
+    ```bash
+    tar -zxvf /opt/software/apache-zookeeper-3.8.2-bin.tar.gz -C /opt/bigdata
+    ```
+
+2. 创建软链接
+
+    ```bash
+    ln -s /opt/bigdata/apache-zookeeper-3.8.2-bin /opt/bigdata/zookeeper
+    ```
+
+3. 修改配置文件
+
+    ```bash
+    mv /opt/bigdata/zookeeper/conf/zoo_sample.cfg /opt/bigdata/zookeeper/conf/zoo.cfg
+    vim /opt/bigdata/zookeeper/conf/zoo.cfg
+    ```
+
+    ```bash
+    dataDir=/opt/zkdata
+    ```
+
+4. 启动 zookeeper
+
+    ```bash
+    /opt/bigdata/zookeeper/bin/zkServer.sh start
+    ```
+
 ## 安装部署
 
 ### 安装包准备
@@ -108,7 +121,10 @@ sidebar_label: 部署 DolphinScheduler
     :::
 
     ```bash
-    wget https://dlcdn.apache.org/dolphinscheduler/3.1.7/apache-dolphinscheduler-3.1.7-bin.tar.gz
+    wget https://dlcdn.apache.org/dolphinscheduler/3.1.7/apache-dolphinscheduler-3.1.7-bin.tar.gz -O /opt/software/apache-dolphinscheduler-3.1.7-bin.tar.gz
+    ```
+    
+    ```bash
     tar -zxvf /opt/software/apache-dolphinscheduler-3.1.7-bin.tar.gz -C /opt/software
     ```
 
@@ -119,14 +135,22 @@ sidebar_label: 部署 DolphinScheduler
     由于 Apache License 2.0 的限制，DolphinScheduler 的安装包中不包含 mysql 驱动，需要自行上传。
     :::
 
-    我这里首先上传 mysql 驱动到 `/opt/software` 目录，然后拷贝到所需驱动的各个服务的 libs 目录下。
+    我这里首先下载 mysql 驱动到 `/opt/software` 目录，然后拷贝到所需驱动的各个服务的 libs 目录下。
 
     ```bash
-    cp /opt/software/mysql-connector-java-8.0.16.jar /opt/software/apache-dolphinscheduler-3.1.7-bin/alert-server/libs
-    cp /opt/software/mysql-connector-java-8.0.16.jar /opt/software/apache-dolphinscheduler-3.1.7-bin/api-server/libs
-    cp /opt/software/mysql-connector-java-8.0.16.jar /opt/software/apache-dolphinscheduler-3.1.7-bin/master-server/libs
-    cp /opt/software/mysql-connector-java-8.0.16.jar /opt/software/apache-dolphinscheduler-3.1.7-bin/worker-server/libs
-    cp /opt/software/mysql-connector-java-8.0.16.jar /opt/software/apache-dolphinscheduler-3.1.7-bin/tools/libs
+    wget https://downloads.mysql.com/archives/get/p/3/file/mysql-connector-java-8.0.16.tar.gz -O /opt/software/mysql-connector-java-8.0.16.tar.gz
+    ```
+    
+    ```bash
+    tar -zxvf /opt/software/mysql-connector-java-8.0.16.tar.gz -C /opt/software
+    ```
+
+    ```bash
+    cp /opt/software/mysql-connector-java-8.0.16/mysql-connector-java-8.0.16.jar /opt/software/apache-dolphinscheduler-3.1.7-bin/alert-server/libs
+    cp /opt/software/mysql-connector-java-8.0.16/mysql-connector-java-8.0.16.jar /opt/software/apache-dolphinscheduler-3.1.7-bin/api-server/libs
+    cp /opt/software/mysql-connector-java-8.0.16/mysql-connector-java-8.0.16.jar /opt/software/apache-dolphinscheduler-3.1.7-bin/master-server/libs
+    cp /opt/software/mysql-connector-java-8.0.16/mysql-connector-java-8.0.16.jar /opt/software/apache-dolphinscheduler-3.1.7-bin/worker-server/libs
+    cp /opt/software/mysql-connector-java-8.0.16/mysql-connector-java-8.0.16.jar /opt/software/apache-dolphinscheduler-3.1.7-bin/tools/libs
     ```
     :::caution
     - 官方文档说明，若使用 mysql 作为元数据库，则添加的驱动版本必须为 8.0.16。
@@ -147,10 +171,10 @@ sidebar_label: 部署 DolphinScheduler
     mysql> CREATE DATABASE dolphinscheduler DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
 
     # 修改 {user} 和 {password} 为你希望的用户名和密码
-    mysql> CREATE USER 'homelab'@'%' IDENTIFIED BY 'yourpassword';
-    mysql> GRANT ALL PRIVILEGES ON dolphinscheduler.* TO 'homelab'@'%';
-    mysql> CREATE USER 'homelab'@'localhost' IDENTIFIED BY 'yourpassword';
-    mysql> GRANT ALL PRIVILEGES ON dolphinscheduler.* TO 'homelab'@'localhost';
+    mysql> CREATE USER 'homelabscheduler'@'%' IDENTIFIED BY 'yourpassword';
+    mysql> GRANT ALL PRIVILEGES ON dolphinscheduler.* TO 'homelabscheduler'@'%';
+    mysql> CREATE USER 'homelabscheduler'@'localhost' IDENTIFIED BY 'yourpassword';
+    mysql> GRANT ALL PRIVILEGES ON dolphinscheduler.* TO 'homelabscheduler'@'localhost';
     mysql> FLUSH PRIVILEGES;
     ```
 
@@ -178,4 +202,3 @@ sidebar_label: 部署 DolphinScheduler
 ### 部署 DolphinScheduler
 
 1. 
-

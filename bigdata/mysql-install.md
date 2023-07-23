@@ -9,14 +9,14 @@ sidebar_label: MySQL安装
 1. 安装 MySQL 软件包
 
 ```bash
-dnf install mysql-server
+sudo dnf install mysql-server
 ```
 
 2. 启动 MySQL 服务并设置开机启动
 
 ```bash
-systemctl start mysqld.service
-systemctl enable mysqld.service
+sudo systemctl start mysqld.service
+sudo systemctl enable mysqld.service
 ```
 
 3. 安全性设置
