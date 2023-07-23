@@ -69,6 +69,12 @@ sudo docker exec -it gitlab-web-1 grep 'Password:' /etc/gitlab/initial_root_pass
 
 ## Gitlab版本更新
 
+:::caution
+Gitlab 升级需要遵循一定的升级路线，当长期没有升级，或者跨版本升级时，需要先升级到某个中间版本，再升级到最新版本。
+
+具体的升级路线图，可以参考 [GitLab升级路线](https://gitlab-com.gitlab.io/support/toolbox/upgrade-path/)，选择当前版本与目标版本，即可查看升级路线。
+:::
+
 ```bash
 docker compose pull
 docker compose up -d
