@@ -38,7 +38,7 @@ PROPERTIES (
 );
 ```
 
-### movie.stg_imdb_title_basics
+### movie.stg_imdb_title_episode
 
 ```sql
 CREATE TABLE IF NOT EXISTS movie.stg_imdb_title_episode
