@@ -23,13 +23,13 @@ IMDB 提供了开源的影视数据集，包括了电影、电视剧、演员、
 ```sql
 CREATE TABLE IF NOT EXISTS movie.stg_imdb_title_akas
 (
-    `titleId`         VARCHAR(1000) NOT NULL COMMENT 'a tconst, an alphanumeric unique identifier of the title',
+    `titleId`         VARCHAR(2000) NOT NULL COMMENT 'a tconst, an alphanumeric unique identifier of the title',
     `ordering`        SMALLINT COMMENT 'a number to uniquely identify rows for a given titleId',
-    `title`           VARCHAR(1000) COMMENT 'the localized title',
-    `region`          VARCHAR(100) COMMENT 'the region for this version of the title',
-    `language`        VARCHAR(100) COMMENT 'the language of the title',
-    `types`           VARCHAR(100) COMMENT 'Enumerated set of attributes for this alternative title. One or more of the following: "alternative", "dvd", "festival", "tv", "video", "working", "original", "imdbDisplay". New values may be added in the future without warning',
-    `attributes`      VARCHAR(255) COMMENT 'Additional terms to describe this alternative title, not enumerated',
+    `title`           VARCHAR(2000) COMMENT 'the localized title',
+    `region`          VARCHAR(200) COMMENT 'the region for this version of the title',
+    `language`        VARCHAR(200) COMMENT 'the language of the title',
+    `types`           VARCHAR(200) COMMENT 'Enumerated set of attributes for this alternative title. One or more of the following: "alternative", "dvd", "festival", "tv", "video", "working", "original", "imdbDisplay". New values may be added in the future without warning',
+    `attributes`      VARCHAR(200) COMMENT 'Additional terms to describe this alternative title, not enumerated',
     `isOriginalTitle` BOOLEAN COMMENT '0: not original title; 1: original title'
 ) ENGINE = OLAP
     COMMENT '电影的国际化和本地化标题表' DISTRIBUTED BY HASH(`titleId`) BUCKETS 3
@@ -43,8 +43,8 @@ PROPERTIES (
 ```sql
 CREATE TABLE IF NOT EXISTS movie.stg_imdb_title_episode
 (
-    `tconst`        VARCHAR(100) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
-    `parentTconst`  VARCHAR(100) COMMENT 'The alphanumeric identifier of the parent title.',
+    `tconst`        VARCHAR(200) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
+    `parentTconst`  VARCHAR(200) COMMENT 'The alphanumeric identifier of the parent title.',
     `seasonNumber`  TINYINT COMMENT 'The season number of the tv episode.',
     `episodeNumber` TINYINT COMMENT 'The episode number of the tv episode.'
 ) ENGINE = OLAP
@@ -59,15 +59,15 @@ PROPERTIES (
 ```sql
 CREATE TABLE IF NOT EXISTS movie.stg_imdb_title_basics
 (
-    `tconst`         VARCHAR(100) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
-    `titleType`      VARCHAR(100) COMMENT 'The type/format of the title (e.g. movie, short, tvseries, tvepisode, video, etc).',
-    `primaryTitle`   VARCHAR(1000) COMMENT 'The more popular title / the title used by the filmmakers on promotional materials at the point of release.',
-    `originalTitle`  VARCHAR(1000) COMMENT 'Original title, in the original language.',
+    `tconst`         VARCHAR(200) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
+    `titleType`      VARCHAR(200) COMMENT 'The type/format of the title (e.g. movie, short, tvseries, tvepisode, video, etc).',
+    `primaryTitle`   VARCHAR(2000) COMMENT 'The more popular title / the title used by the filmmakers on promotional materials at the point of release.',
+    `originalTitle`  VARCHAR(2000) COMMENT 'Original title, in the original language.',
     `isAdult`        BOOLEAN COMMENT '0: non-adult title; 1: adult title.',
     `startYear`      SMALLINT COMMENT 'Represents the release year of a title. In the case of TV Series, it is the series start year.',
     `endYear`        SMALLINT COMMENT 'TV Series end year. ‘0’ for all other title types.',
-    `runtimeMinutes` SMALLINT COMMENT 'Primary runtime of the title, in minutes.',
-    `genres`         VARCHAR(100) COMMENT 'Includes up to three genres associated with the title.'
+    `runtimeMinutes` INT COMMENT 'Primary runtime of the title, in minutes.',
+    `genres`         VARCHAR(200) COMMENT 'Includes up to three genres associated with the title.'
 ) ENGINE = OLAP
     COMMENT '电影基本信息表' DISTRIBUTED BY HASH(`titleType`) BUCKETS 3
 PROPERTIES (
@@ -80,9 +80,9 @@ PROPERTIES (
 ```sql
 CREATE TABLE IF NOT EXISTS movie.stg_imdb_title_crew
 (
-    `tconst`    VARCHAR(100) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
-    `directors` VARCHAR(255) COMMENT 'A comma separated list of nconsts of directors.',
-    `writers`   VARCHAR(255) COMMENT 'A comma separated list of nconsts of writers.'
+    `tconst`    VARCHAR(200) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
+    `directors` VARCHAR(20000) COMMENT 'A comma separated list of nconsts of directors.',
+    `writers`   VARCHAR(20000) COMMENT 'A comma separated list of nconsts of writers.'
 ) ENGINE = OLAP
     COMMENT '电影的导演和编剧表' DISTRIBUTED BY HASH(`tconst`) BUCKETS 3
 PROPERTIES (
@@ -95,12 +95,12 @@ PROPERTIES (
 ```sql
 CREATE TABLE IF NOT EXISTS movie.stg_imdb_title_principals
 (
-    `tconst`     VARCHAR(100) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
+    `tconst`     VARCHAR(200) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
     `ordering`   SMALLINT          COMMENT 'A number to uniquely identify rows for a given titleId.',
-    `nconst`     VARCHAR(255) COMMENT 'The alphanumeric identifier of the name/person.',
-    `category`   VARCHAR(255) COMMENT 'The category of job that person was in.',
-    `job`        VARCHAR(255) COMMENT 'The specific job title if applicable, else \N.',
-    `characters` VARCHAR(255) COMMENT 'The name of the character played if applicable, else \N.'
+    `nconst`     VARCHAR(200) COMMENT 'The alphanumeric identifier of the name/person.',
+    `category`   VARCHAR(200) COMMENT 'The category of job that person was in.',
+    `job`        VARCHAR(2000) COMMENT 'The specific job title if applicable, else \N.',
+    `characters` VARCHAR(2000) COMMENT 'The name of the character played if applicable, else \N.'
 ) ENGINE = OLAP
     COMMENT '电影的演员和其他成员表' DISTRIBUTED BY HASH(`tconst`) BUCKETS 3
 PROPERTIES (
@@ -113,7 +113,7 @@ PROPERTIES (
 ```sql
 CREATE TABLE IF NOT EXISTS movie.stg_imdb_title_ratings
 (
-    `tconst`        VARCHAR(100) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
+    `tconst`        VARCHAR(200) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
     `averageRating` FLOAT COMMENT 'The average rating of the title.',
     `numVotes`      INT COMMENT 'The number of votes the title has received.'
 ) ENGINE = OLAP
@@ -128,12 +128,12 @@ PROPERTIES (
 ```sql
 CREATE TABLE IF NOT EXISTS movie.stg_imdb_name_basics
 (
-    `nconst`            VARCHAR(100) NOT NULL COMMENT 'The alphanumeric identifier of the name/person.',
-    `primaryName`       VARCHAR(255) COMMENT 'The name by which the person is most often credited.',
+    `nconst`            VARCHAR(200) NOT NULL COMMENT 'The alphanumeric identifier of the name/person.',
+    `primaryName`       VARCHAR(20000) COMMENT 'The name by which the person is most often credited.',
     `birthYear`         SMALLINT COMMENT 'The year in which the person was born.',
     `deathYear`         SMALLINT COMMENT 'The year in which the person died.',
-    `primaryProfession` VARCHAR(255) COMMENT 'The top-3 professions of the person.',
-    `knownForTitles`    VARCHAR(255) COMMENT 'Titles the person is known for.'
+    `primaryProfession` VARCHAR(20000) COMMENT 'The top-3 professions of the person.',
+    `knownForTitles`    VARCHAR(20000) COMMENT 'Titles the person is known for.'
 ) ENGINE = OLAP
     COMMENT '演员和其他成员的基本信息表' DISTRIBUTED BY HASH(`nconst`) BUCKETS 3
 PROPERTIES (
