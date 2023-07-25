@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Mattermost'
-title: Docker部署Mattermost
+title: 部署 Mattermost 团队沟通工具
 tags: 
   - mattermost
   - docker
@@ -10,7 +10,21 @@ import LinkCard from '@site/src/components/LinkCard';
 
 <LinkCard title="Mattermost官方安装文档" description="Install Mattermost on Docker — Mattermost 6.0 documentation" to="https://docs.mattermost.com/install/install-docker.html"></LinkCard>
 
-## Docker-Compose准备
+## Ubuntu omnibus 安装
+
+1. 安装依赖
+
+  ```bash
+  curl -o- https://deb.packages.mattermost.com/repo-setup.sh | sudo bash
+  ```
+
+2. 安装Mattermost
+
+  ```bash
+  sudo MMO_HTTPS=false apt install mattermost-omnibus
+  ```
+
+## Docker-Compose 安装
 
 #### 克隆官方Docker仓库
 ```bash
