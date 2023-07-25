@@ -23,9 +23,9 @@ IMDB 提供了开源的影视数据集，包括了电影、电视剧、演员、
 ```sql
 CREATE TABLE IF NOT EXISTS movie.stg_imdb_title_akas
 (
-    `titleId`         VARCHAR(100) NOT NULL COMMENT 'a tconst, an alphanumeric unique identifier of the title',
-    `ordering`        INT COMMENT 'a number to uniquely identify rows for a given titleId',
-    `title`           VARCHAR(255) COMMENT 'the localized title',
+    `titleId`         VARCHAR(1000) NOT NULL COMMENT 'a tconst, an alphanumeric unique identifier of the title',
+    `ordering`        SMALLINT COMMENT 'a number to uniquely identify rows for a given titleId',
+    `title`           VARCHAR(1000) COMMENT 'the localized title',
     `region`          VARCHAR(100) COMMENT 'the region for this version of the title',
     `language`        VARCHAR(100) COMMENT 'the language of the title',
     `types`           VARCHAR(100) COMMENT 'Enumerated set of attributes for this alternative title. One or more of the following: "alternative", "dvd", "festival", "tv", "video", "working", "original", "imdbDisplay". New values may be added in the future without warning',
@@ -61,12 +61,12 @@ CREATE TABLE IF NOT EXISTS movie.stg_imdb_title_basics
 (
     `tconst`         VARCHAR(100) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
     `titleType`      VARCHAR(100) COMMENT 'The type/format of the title (e.g. movie, short, tvseries, tvepisode, video, etc).',
-    `primaryTitle`   VARCHAR(255) COMMENT 'The more popular title / the title used by the filmmakers on promotional materials at the point of release.',
-    `originalTitle`  VARCHAR(255) COMMENT 'Original title, in the original language.',
+    `primaryTitle`   VARCHAR(1000) COMMENT 'The more popular title / the title used by the filmmakers on promotional materials at the point of release.',
+    `originalTitle`  VARCHAR(1000) COMMENT 'Original title, in the original language.',
     `isAdult`        BOOLEAN COMMENT '0: non-adult title; 1: adult title.',
-    `startYear`      TINYINT COMMENT 'Represents the release year of a title. In the case of TV Series, it is the series start year.',
-    `endYear`        TINYINT COMMENT 'TV Series end year. ‘0’ for all other title types.',
-    `runtimeMinutes` INT COMMENT 'Primary runtime of the title, in minutes.',
+    `startYear`      SMALLINT COMMENT 'Represents the release year of a title. In the case of TV Series, it is the series start year.',
+    `endYear`        SMALLINT COMMENT 'TV Series end year. ‘0’ for all other title types.',
+    `runtimeMinutes` SMALLINT COMMENT 'Primary runtime of the title, in minutes.',
     `genres`         VARCHAR(100) COMMENT 'Includes up to three genres associated with the title.'
 ) ENGINE = OLAP
     COMMENT '电影基本信息表' DISTRIBUTED BY HASH(`titleType`) BUCKETS 3
@@ -96,11 +96,11 @@ PROPERTIES (
 CREATE TABLE IF NOT EXISTS movie.stg_imdb_title_principals
 (
     `tconst`     VARCHAR(100) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
-    `ordering`   INT          COMMENT 'A number to uniquely identify rows for a given titleId.',
+    `ordering`   SMALLINT          COMMENT 'A number to uniquely identify rows for a given titleId.',
     `nconst`     VARCHAR(255) COMMENT 'The alphanumeric identifier of the name/person.',
     `category`   VARCHAR(255) COMMENT 'The category of job that person was in.',
-    `job`        VARCHAR(255) COMMENT 'The specific job title if applicable, else '\N'.',
-    `characters` VARCHAR(255) COMMENT 'The name of the character played if applicable, else '\N'.'
+    `job`        VARCHAR(255) COMMENT 'The specific job title if applicable, else \N.',
+    `characters` VARCHAR(255) COMMENT 'The name of the character played if applicable, else \N.'
 ) ENGINE = OLAP
     COMMENT '电影的演员和其他成员表' DISTRIBUTED BY HASH(`tconst`) BUCKETS 3
 PROPERTIES (
@@ -130,8 +130,8 @@ CREATE TABLE IF NOT EXISTS movie.stg_imdb_name_basics
 (
     `nconst`            VARCHAR(100) NOT NULL COMMENT 'The alphanumeric identifier of the name/person.',
     `primaryName`       VARCHAR(255) COMMENT 'The name by which the person is most often credited.',
-    `birthYear`         TINYINT COMMENT 'The year in which the person was born.',
-    `deathYear`         TINYINT COMMENT 'The year in which the person died.',
+    `birthYear`         SMALLINT COMMENT 'The year in which the person was born.',
+    `deathYear`         SMALLINT COMMENT 'The year in which the person died.',
     `primaryProfession` VARCHAR(255) COMMENT 'The top-3 professions of the person.',
     `knownForTitles`    VARCHAR(255) COMMENT 'Titles the person is known for.'
 ) ENGINE = OLAP
