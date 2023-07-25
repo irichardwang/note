@@ -13,7 +13,7 @@ import LinkCard from '@site/src/components/LinkCard';
 
 #### 安装 yum 工具包
 ```bash
-yum install -y yum-utils
+sudo yum install -y yum-utils
 ```
 
 #### 添加docker官方仓库
@@ -22,22 +22,22 @@ yum install -y yum-utils
 :::
 
 ```bash
-yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo  
 ```
 
 #### Docker的安装命令
 ```bash
-yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 #### 启动docker
 ```bash
-systemctl start docker
+sudo systemctl start docker
 ```
 
 #### 设置开机自启
 ```bash
-systemctl enable docker
+sudo systemctl enable docker
 ```
 
 ## 安装Docker-Compose
@@ -50,7 +50,7 @@ Docker compose 与 docker-compose 服务不同，前者为plugin，后者为stan
 
 #### 下载docker-compose
 ```bash
-curl -SL https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+curl -SL https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
 ```
 
 #### 授权执行命令
