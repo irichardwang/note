@@ -8,6 +8,13 @@ sidebar_label: 定时同步
 调度工具采用低代码的 dolpinschedular，每周同步一次 IMDB 数据集，以确保数据集中包含最新的电影信息以及评分信息。
 :::
 
+## 工作流创建
+
+:::info
+- 工作流创建位于 项目管理 > 选择/创建项目 > 工作流定义 > 创建工作流。
+- 示例以导入表 `title.ratings` 数据为例，该表数据量较小，可作为测试使用。
+:::
+
 ### 1. shell 任务：下载 IMDB 数据集到本地
 
 :::caution
@@ -50,3 +57,8 @@ curl --location-trusted -u homelab:cRiwVxEv66jcce8v -H "format:csv_with_names" -
 1. 导入表的字段数量与顺序，必须与被导入 csv 文件的字段数量与顺序一致。
 2. 被导入文件的首行默认会作为数据而非字段名，需要指定文件类型为 csv_with_names，才能正确导入。
 :::
+
+## 任务上线与定时
+
+### 测试运行
+
