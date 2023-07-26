@@ -1,7 +1,7 @@
 ---
-sidebarlabel: IMDB数据集导入
+sidebarlabel: STG层
 sidebar_position: 2
-title: 影视基础信息的导入
+title: 创建STG缓存层--基础建表语句
 ---
 
 ### IMDB 数据集
@@ -17,6 +17,10 @@ IMDB 提供了开源的影视数据集，包括了电影、电视剧、演员、
 :::info
 - 字段 comment 照抄了官网对应的字段说明，没有做翻译。
 - 作为导入 ods 层的临时表，备份数量设置为 1。
+:::
+
+:::tip
+这一层作为原始数据的缓存，不做任何数据处理。为了保证写入数据的完整性，在指定字段类型时，尽量使用 `STRING` 字符串类型，避免因为类型转换导致的数据丢失。
 :::
 
 ### movie.stg_imdb_title_akas
@@ -114,9 +118,9 @@ PROPERTIES (
 ```sql
 CREATE TABLE IF NOT EXISTS movie.stg_imdb_title_ratings
 (
-    `tconst`        VARCHAR(200) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
-    `averageRating` FLOAT COMMENT 'The average rating of the title.',
-    `numVotes`      INT COMMENT 'The number of votes the title has received.'
+    `tconst`        varchar(65533) NOT NULL COMMENT 'The alphanumeric identifier of the title.',
+    `averageRating` varchar(65533) COMMENT 'The average rating of the title.',
+    `numVotes`      varchar(65533) COMMENT 'The number of votes the title has received.'
 ) ENGINE = OLAP
     COMMENT '电影评分表' DISTRIBUTED BY HASH(`tconst`) BUCKETS 3
 PROPERTIES (

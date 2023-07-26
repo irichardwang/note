@@ -1,11 +1,15 @@
 ---
 sidebarlabel: ODS层
-title: 创建ODS层
+title: 创建ODS层--动态分区表
 sidebar_position: 4
 description: 在创建ODS层过程中，学习如何使用动态分区表。
 ---
 
-## 创建 ODS 层动态分区表
+:::note
+在把 IMDB 官网的数据集抽取到缓存表后，接下来要将数据写入到 ods 层。ods 层开始采用分区表，计划保留近 1 个月的数据。建表过程使用到 doris 的动态分区功能。
+:::
+
+### 创建 ODS 层动态分区表
 
 ```sql
 CREATE TABLE
@@ -29,7 +33,7 @@ CREATE TABLE
     );
 ```
 
-:::tips
+:::tip
 动态分区的执行频率默认为 10 分钟。为了确保次日凌晨写入数据时，分区已经创建出来，可以配置 `"dynamic_partition.end" = "1"`，表示提前创建未来一天的分区。
 :::
 
