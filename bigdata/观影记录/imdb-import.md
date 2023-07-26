@@ -1,5 +1,6 @@
 ---
 sidebarlabel: IMDB数据集导入
+sidebar_position: 2
 title: 影视基础信息的导入
 ---
 
