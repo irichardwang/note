@@ -30,7 +30,7 @@ wget https://goauthentik.io/docker-compose.yml
 
 :::caution
 `pwgen` 需要EPEL源，如果没有安装，可参考以下链接安装。
-<LinkCard title="替换EPEL软件源" to="/linux/linux-mirrors#替换epel企业源" />
+<LinkCard title="替换EPEL软件源" to="/homelab/linux/linux-mirrors#替换-epel-软件源" />
 :::
 
 ```bash
