@@ -39,12 +39,12 @@ import TabItem from '@theme/TabItem';
 
 2. 清除历史缓存
     ```bash
-    dnf clean all
+    sudo dnf clean all
     ```
 
 3. 生成缓存
     ```bash
-    dnf makecache
+    sudo dnf makecache
     ```
 
 ## 替换 `EPEL` 软件源
