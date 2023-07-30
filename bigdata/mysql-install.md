@@ -8,38 +8,50 @@ sidebar_label: MySQL安装
 
 1. 安装 MySQL 软件包
 
-```bash
-sudo dnf install mysql-server
-```
+    ```bash
+    sudo dnf install mysql-server
+    ```
 
 2. 启动 MySQL 服务并设置开机启动
 
-```bash
-sudo systemctl start mysqld.service
-sudo systemctl enable mysqld.service
-```
+    ```bash
+    sudo systemctl start mysqld.service
+    sudo systemctl enable mysqld.service
+    ```
 
 3. 安全性设置
 
-```bash
-mysql_secure_installation
-```
+    ```bash
+    mysql_secure_installation
+    ```
 
-:::info
-该命令涉及如下配置
-1. 设置 root 密码
-2. 确认是否删除匿名用户
-3. 确实是否禁止 root 远程登录
-4. 确认是否删除 test 数据库
-5. 确认是否重新加载权限表
-:::
+   :::info
+   该命令涉及如下配置
+   1. 设置 root 密码
+   2. 确认是否删除匿名用户
+   3. 确实是否禁止 root 远程登录
+   4. 确认是否删除 test 数据库
+   5. 确认是否重新加载权限表
+   :::
 
 ## 2. 配置 MySQL
 
 1. 修改配置文件
 
-```bash
-vim /etc/my.cnf.d/mysql-server.cnf
-```
+    ```bash
+    vim /etc/my.cnf.d/mysql-server.cnf
+    ```
 
-其中，`[mysqld]` 下的配置项可以修改端口等信息。
+    其中，`[mysqld]` 下的配置项可以修改端口等信息。
+
+## 3. 使用 MySQL
+    
+1. 登录 MySQL
+    ```bash
+    mysql -u root -p
+    ```
+
+2. 创建数据库
+    ```sql
+    CREATE DATABASE IF NOT EXISTS `manager` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    ```

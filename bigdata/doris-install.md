@@ -8,16 +8,17 @@ sidebar_label: Doris集群部署
 
 ### 节点规划
 
-| 主机名  | 角色             |
-| ------- | ---------------- |
-| doris01 | FE1, BE1, Broker |
-| doris02 | FE2, BE2, Broker |
-| doris03 | FE3, BE3, Broker |
+| 主机名     | 角色  |
+|---------| --- |
+| dorisfe | FE1 |
+| doris01 | BE1 |
+| doris02 | BE2 |
+| doris03 | BE3 |
 
 ### 设置系统最大打开文件句柄数
 
 ```bash
-vi /etc/security/limits.conf
+sudo vim /etc/security/limits.conf
 ```
 
 ```bash
