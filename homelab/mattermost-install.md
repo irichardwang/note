@@ -28,13 +28,13 @@ import LinkCard from '@site/src/components/LinkCard';
 
 #### 克隆官方Docker仓库
 ```bash
-git clone https://github.com/mattermost/docker
+sudo git clone https://github.com/mattermost/docker
 cd docker
 ```
 
 #### 复制`.env`配置文件
 ```bash
-cp env.example .env
+sudo cp env.example .env
 ```
 
 #### 修改`.env`配置文件
@@ -63,8 +63,8 @@ MATTERMOST_IMAGE_TAG=latest
 ## 数据持久化
 
 ```bash
-mkdir -p ./volumes/app/mattermost/{config,data,logs,plugins,client/plugins,bleve-indexes}
-chown -R 2000:2000 ./volumes/app/mattermost
+sudo mkdir -p ./volumes/app/mattermost/{config,data,logs,plugins,client/plugins,bleve-indexes}
+sudo chown -R 2000:2000 ./volumes/app/mattermost
 ```
 
 ## 启动/关闭服务
@@ -72,7 +72,7 @@ chown -R 2000:2000 ./volumes/app/mattermost
 
 #### 启动服务
 ```bash
-docker compose -f docker-compose.yml -f docker-compose.without-nginx.yml up -d
+sudo docker compose -f docker-compose.yml -f docker-compose.without-nginx.yml up -d
 ```
 
 #### 关闭服务

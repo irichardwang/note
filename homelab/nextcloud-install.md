@@ -35,12 +35,12 @@ Nextcloud是一款开源的私有云存储软件，可以用来搭建私有网�
         environment:
           - SKIP_DOMAIN_VALIDATION=true
           - AIO_DISABLE_BACKUP_SECTION=true
-          - APACHE_PORT=11000 
-          - APACHE_IP_BINDING=127.0.0.1 
-          - NEXTCLOUD_DATADIR=/mnt/ncdata 
-          - NEXTCLOUD_UPLOAD_LIMIT=20G 
-          - NEXTCLOUD_MAX_TIME=7200 
-          - NEXTCLOUD_MEMORY_LIMIT=1024M 
+          - APACHE_PORT=11000
+          - APACHE_IP_BINDING=127.0.0.1
+          - NEXTCLOUD_DATADIR=/mnt/ncdata
+          - NEXTCLOUD_UPLOAD_LIMIT=20G
+          - NEXTCLOUD_MAX_TIME=7200
+          - NEXTCLOUD_MEMORY_LIMIT=1024M
     
     volumes:
       nextcloud_aio_mastercontainer:
