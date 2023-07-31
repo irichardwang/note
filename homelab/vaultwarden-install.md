@@ -1,4 +1,3 @@
-
 ---
 sidebar_label: 'Vaultwarden'
 title: Docker部署Vaultwarden
