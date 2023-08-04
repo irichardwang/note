@@ -7,7 +7,9 @@ title: 替换软件源
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-## 替换 `yum` 软件源
+## RockyLinux替换软件源
+
+### 替换 `yum` 软件源
 
 1. 更换软件源
     <Tabs>
@@ -35,8 +37,6 @@ import TabItem from '@theme/TabItem';
     </TabItem>
     </Tabs>
 
-
-
 2. 清除历史缓存
     ```bash
     sudo dnf clean all
@@ -47,4 +47,12 @@ import TabItem from '@theme/TabItem';
     sudo dnf makecache
     ```
 
-## 替换 `EPEL` 软件源
+### 替换 `EPEL` 软件源
+
+## Ubuntu替换软件源
+
+1. 在安装时替换以下 mirror 地址
+
+    ```
+    https://mirrors.cernet.edu.cn/ubuntu/
+    ```
