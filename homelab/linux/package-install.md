@@ -14,17 +14,15 @@ import TabItem from '@theme/TabItem';
 ### 1. 基础软件包
 
 <Tabs>
-    <TabItem value='RockyLinux' label='RockyLinux' default>
+<TabItem value='RockyLinux' label='RockyLinux' default>
+```bash
+sudo dnf install -y vim wget git
+```
+</TabItem>
 
-    ```bash
-    sudo dnf install -y vim wget git
-    ```
-    </TabItem>
-    
-    <TabItem value='Ubuntu' label='Ubuntu' default>
-
-    ```bash
-    sudo apt install -y vim wget git qemu-guest-agent
-    ```
-    </TabItem>
+<TabItem value='Ubuntu' label='Ubuntu' default>
+```bash
+sudo apt install -y vim wget git qemu-guest-agent
+```
+</TabItem>
 </Tabs>
