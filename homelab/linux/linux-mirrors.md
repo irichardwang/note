@@ -1,6 +1,6 @@
 ---
 sidebar_label: 替换软件源
-sidebar_position: 2
+sidebar_position: 1
 title: 替换软件源
 ---
 
