@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 title: 最小化安装下的补充软件包
 sidebar_label: 软件包
 ---
@@ -15,14 +15,18 @@ import TabItem from '@theme/TabItem';
 
 <Tabs>
 <TabItem value='RockyLinux' label='RockyLinux' default>
+
 ```bash
 sudo dnf install -y vim wget git
 ```
+
 </TabItem>
 
 <TabItem value='Ubuntu' label='Ubuntu' default>
+
 ```bash
 sudo apt install -y vim wget git qemu-guest-agent
 ```
+
 </TabItem>
 </Tabs>
