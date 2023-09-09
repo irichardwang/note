@@ -164,6 +164,17 @@ const config = {
       [
         '@docusaurus/plugin-content-docs',
         {
+          id: 'datascience',
+          path: 'datascience',
+          routeBasePath: 'datascience',
+          sidebarPath: require.resolve('./sidebars.js'),
+          editUrl:
+              'https://github.com/erzhongwang/note/blob/main/',
+        },
+      ],
+      [
+        '@docusaurus/plugin-content-docs',
+        {
           id: 'bigdata',
           path: 'bigdata',
           routeBasePath: 'bigdata',
